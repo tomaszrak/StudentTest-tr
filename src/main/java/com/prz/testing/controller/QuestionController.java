@@ -3,6 +3,7 @@ package com.prz.testing.controller;
 import com.prz.testing.criteria.Criteria;
 import com.prz.testing.domain.Question;
 import com.prz.testing.dto.PaginationData;
+import com.prz.testing.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,13 @@ import java.util.List;
 public class QuestionController extends PaginationController<Question>{
 
     @Autowired
-    private QuestionSer
+    private QuestionService questionServicel;
+
     @Override
     public PaginationData<Question> fetch(Criteria criteria) throws Exception {
-        List<Question> data =
-        return null;
+        List<Question> data = questionServicel.getWithCriteriaPaginatedQuestions(criteria);
+        Integer totalItems = questionServicel.countWithCriteriaQuestions(criteria);
+        return new PaginationData<Question>(totalItems, data);
     }
 
     public ResponseEntity addQuestion(){

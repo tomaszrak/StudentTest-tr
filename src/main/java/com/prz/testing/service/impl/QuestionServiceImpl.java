@@ -24,6 +24,10 @@ public class QuestionServiceImpl implements QuestionService{
 
 
     public List<Question> getWithCriteriaPaginatedQuestions(Criteria criteria) throws SQLException {
+        if(null == criteria.getOrderParam() || null == criteria.getOrderWay()){
+            criteria.setOrderWay("ASC");
+            criteria.setOrderParam("name");
+        }
         return questionRepository.getWithCriteriaPaginated(criteria);
     }
 
