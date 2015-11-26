@@ -22,11 +22,11 @@ public class SpringWebAppInitializer implements WebApplicationInitializer{
 
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
         rootContext.register(SpringWebConfig.class);
-
         rootContext.setServletContext(servletContext);
-
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(rootContext));
-        dispatcher.addMapping("/*");
+        //dispatcher.addMapping("/");
+        dispatcher.addMapping("/rest/*");
+        dispatcher.addMapping("/app");
         dispatcher.setLoadOnStartup(1);
     }
 }

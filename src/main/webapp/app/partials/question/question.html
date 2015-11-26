@@ -1,0 +1,54 @@
+<div>
+
+    <div class="form-group col-md-3 col-md-offset-1">
+        <form name="questionForm" class="form-horizontal">
+            <label for="name"><strong>{{$root.msg['st.name']}}</strong></label>
+            <input class="form-control" name="name" ng-model="question.name" required/>
+
+            <label for="type"><strong>{{$root.msg['st.questionType']}}</strong></label>
+            <select class="form-control" name="type" ng-model="question.type" ng-options="t.name for t in questionTypes"
+                    required>
+
+            </select>
+
+            <label for="time"><strong>{{$root.msg['st.timeForAnswer']}}</strong></label>
+            <input class="form-control" name="time" type="number" ng-model="question.timeForAnswer">
+
+            <button type="submit" class="btn btn-default" ng-click="addQuestion()">{{$root.msg['st.save']}}</button>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-stripped">
+        <tr class="header">
+            <th>{{$root.msg['st.name']}}</th>
+            <th>{{$root.msg['st.questionType']}}</th>
+            <th>{{$root.msg['st.timeForAnswer']}}</th>
+            <th>{{$root.msg['st.createDate']}}</th>
+            <th>{{$root.msg['st.creator']}}</th>
+            <th>{{$root.msg['st.answers']}}</th>
+            <th>{{$root.msg['st.actions']}}</th>
+        </tr>
+        <tr ng-repeat="question in questions">
+            <td>{{ question.name }}</td>
+            <td>{{ question.type| typeName : questionTypes}}</td>
+            <td>{{ question.timeForAnswer}}</td>
+            <td>{{ question.createDate | date : 'yyyy-MM-dd'}}</td>
+            <td>{{ question.creator.firstName}} {{question.creator.lastName}}</td>
+            <td><button class="btn btn-primary" ng-click="showAnswers()">{{$root.msg['st.showAnswers']}}</button></td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{$root.msg['st.actions']}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="" ng-click="editQuestion(question.id)">{{$root.msg['st.edit']}}</a></li>
+                        <li><a href="" ng-click="addAnswer(question.id)">{{$root.msg['st.addAnswer']}}</a></li>
+                        <li><a href="" ng-click="showPreview(question.id)">{{$root.msg['st.preview']}}</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>

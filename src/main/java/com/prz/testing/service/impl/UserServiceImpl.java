@@ -4,6 +4,7 @@ import com.prz.testing.criteria.Criteria;
 import com.prz.testing.domain.Role;
 import com.prz.testing.domain.User;
 import com.prz.testing.enumerate.RoleName;
+import com.prz.testing.enumerate.Status;
 import com.prz.testing.repository.RoleRepository;
 import com.prz.testing.repository.UserRepository;
 import com.prz.testing.service.UserService;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -37,11 +38,14 @@ public class UserServiceImpl implements UserService{
     }
 
     public void saveUser(User user) throws SQLException {
-       user.setRole(roleRepository.getByName(RoleName.STUDENT));
-       userRepository.save(user);
+        user.setRole(roleRepository.getByName(RoleName.STUDENT));
+        System.out.println(user.getRole());
+        user.setCreateDate(new Date());
+        user.setStatus(Status.ACTIVE);
+        userRepository.save(user);
     }
 
-    public void saveRole() throws SQLException{
+    public void saveRole() throws SQLException {
         Role role = new Role();
         role.setCreateDate(new Date());
         role.setName(RoleName.STUDENT);
@@ -60,7 +64,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public List<User> getUsersWithCriteriaPaginated(Criteria criteria) {
-        if(null == criteria.getOrderWay() || null == criteria.getOrderParam()){
+        if (null == criteria.getOrderWay() || null == criteria.getOrderParam()) {
             criteria.setOrderWay("ASC");
             criteria.setOrderParam("lastName");
         }
@@ -69,5 +73,9 @@ public class UserServiceImpl implements UserService{
 
     public Integer countUsersWithCriteria(Criteria criteria) {
         return userRepository.countWithCriteria(criteria);
+    }
+
+    public void updateUser(User user) throws SQLException {
+        userRepository.update(user);
     }
 }

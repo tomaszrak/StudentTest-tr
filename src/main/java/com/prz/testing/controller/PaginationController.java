@@ -18,7 +18,7 @@ public abstract class PaginationController<T> {
 
     private Logger logger = Logger.getLogger(PaginationController.class);
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<PaginationData<T>> paginateData(@RequestBody Criteria criteria){
         PaginationData<T> data;
         try {

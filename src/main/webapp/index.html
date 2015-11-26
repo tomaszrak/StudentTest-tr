@@ -1,12 +1,60 @@
-<html>
+<!DOCTYPE html>
+<html ng-app="stApp">
 <head>
-    <script src="https://github.jspm.io/jmcriffey/bower-traceur-runtime@0.0.87/traceur-runtime.js"></script>
-    <script src="https://jspm.io/system@0.16.js"></script>
-    <script src="https://code.angularjs.org/2.0.0-alpha.28/angular2.dev.js"></script>
-    <script src="https://code.angularjs.org/2.0.0-alpha.28/router.dev.js"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="app/libs/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" href="app/libs/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="app/libs/angular-xeditable/dist/css/xeditable.css">
+    <link rel="stylesheet" href="app/css/custom.css">
 </head>
-<body>
-<h1>TEST</h1>
-    <app></app>
+<body ng-controller="IndexCtrl">
+<div>
+    <nav class="navbar" id="header">
+        <div class="navbar-header navbar-brand">
+            Student test
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#/main">{{$root.msg['st.main']}}</a></li>
+            <li><a href="#/question">{{$root.msg['st.questions']}}</a>
+            <li><a href="#/users">{{$root.msg['st.users']}}</a></li>
+        </ul>
+    </nav>
+
+    <div class="view" ng-view></div>
+
+
+    <div class="footer text-center">
+        2015 Copyright
+    </div>
+</div>
+<script src="app/libs/jquery/dist/jquery.js"></script>
+<script src="app/libs/angular/angular.js"></script>
+<script src="app/libs/angular-route/angular-route.js"></script>
+<script src="app/libs/angular-resource/angular-resource.js"></script>
+<script src="app/libs/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="app/libs/bootstrap/js/dropdown.js"></script>
+<script src="app/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+<script src="app/components/services/modules.js"></script>
+<script src="app/components/services/userSrv.js"></script>
+<script src="app/components/services/questionSrv.js"></script>
+<script src="app/components/services/paginationSrv.js"></script>
+<script src="app/components/services/answerSrv.js"></script>
+
+<script src="app/components/modal/modules.js"></script>
+<script src="app/components/modal/answerModal.js"></script>
+<script src="app/components/modal/questionPreview.js"></script>
+
+<script src="app/components/filter/modules.js"></script>
+<script src="app/components/filter/questionType.js"></script>
+
+<script src="app/partials/modules.js"></script>
+<script src="app/partials/question/question.js"></script>
+<script src="app/partials/main/main.js"></script>
+<script src="app/partials/users/users.js"></script>
+
+
+<script src="app.js"></script>
 </body>
+
 </html>

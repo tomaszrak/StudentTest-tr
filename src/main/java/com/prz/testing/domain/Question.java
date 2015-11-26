@@ -1,6 +1,11 @@
 package com.prz.testing.domain;
 
+import com.prz.testing.enumerate.QuestionType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -15,9 +20,9 @@ public class Question {
     private Long id;
 
     @Column(name = "TYPE")
-    private String type;
+    private QuestionType type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", referencedColumnName = "id")
     private User creator;
 
@@ -46,11 +51,11 @@ public class Question {
         this.id = id;
     }
 
-    public String getType() {
+    public QuestionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(QuestionType type) {
         this.type = type;
     }
 

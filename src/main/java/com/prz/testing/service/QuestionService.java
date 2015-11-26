@@ -17,4 +17,6 @@ public interface QuestionService {
 
     Integer countWithCriteriaQuestions(Criteria criteria) throws SQLException;
 
+    List<Question> getAll() throws SQLException;
+
 }

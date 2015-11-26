@@ -1,12 +1,11 @@
 package com.prz.testing.repository.impl;
 
 import com.prz.testing.criteria.Criteria;
-import com.prz.testing.domain.User;
 import com.prz.testing.repository.AbstractRepository;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,8 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
     @Autowired
     private SessionFactory sessionFactory;
 
+    private Logger logger = Logger.getLogger(AbstractRepository.class);
+
     private Class<T> clazz;
 
     AbstractRepositoryImpl(Class<T> t) {
@@ -34,7 +35,12 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
     }
 
     public void save(Object o) throws SQLException {
-        getCurrentSession().save(o);
+        try {
+            getCurrentSession().save(o);
+        } catch (Exception e) {
+            logger.error("Exception occured during invocation of save()", e);
+            throw new SQLException(e);
+        }
     }
 
     public List<T> getAll() throws SQLException {

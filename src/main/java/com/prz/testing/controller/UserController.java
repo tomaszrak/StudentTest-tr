@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +25,9 @@ import java.util.List;
 /**
  * Created by Roman on 12.09.2015.
  */
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RestController
-public class UserController extends PaginationController<User>{
+public class UserController extends PaginationController<User> {
 
     @Autowired
     private UserService userService;
@@ -43,43 +44,38 @@ public class UserController extends PaginationController<User>{
         return new PaginationData<User>(totalItems, data);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<User> getAll() throws SQLException {
         return userService.getAllUsers();
     }
 
-    public void saveRole() throws SQLException {
-        Role role = new Role();
-        role.setCreateDate(new Date());
-        role.setName(RoleName.ADMIN);
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ResponseEntity<Void> saveUser() throws SQLException {
-        logger.info("com.prz.testing.test.repository");
-        User user = new User();
-        user.setId(new Long(1));
-        user.setPassword("com.prz.testing.test.repository");
-        user.setCreateDate(new Date());
-        user.setEmail("com.prz.testing.test.repository");
-        user.setFirstName("com.prz.testing.test.repository");
-        user.setLastName("com.prz.testing.test.repository");
-        user.setIndexNumber(new Long(787877));
-        user.setStatus(Status.ACTIVE);
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public ResponseEntity<Void> saveUser(@RequestBody User user) throws SQLException {
+        logger.info("test");
+//        User user = new User();
+//        user.setId(new Long(1));
+//        user.setPassword("test");
+//        user.setCreateDate(new Date());
+//        user.setEmail("test");
+//        user.setFirstName("test");
+//        user.setLastName("test");
+//        user.setIndexNumber(new Long(787877));
+//        user.setStatus(Status.ACTIVE);
         userService.saveUser(user);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "role", method = RequestMethod.GET)
-    public Role getRole() throws SQLException {
-        return roleService.getRole(RoleName.STUDENT);
+    @RequestMapping(value = "/userToUpdate", method = RequestMethod.POST)
+    public ResponseEntity<Void> updateUser(@RequestBody User user) throws SQLException {
+        userService.updateUser(user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/paginated", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getPaginatedUsers(){
+    public ResponseEntity<List<User>> getPaginatedUsers() {
         List<User> user = new ArrayList<User>();
         try {
-            user = userService.getAllUsersPaginated(new Criteria(0,10));
+            user = userService.getAllUsersPaginated(new Criteria(0, 10));
         } catch (SQLException e) {
             logger.error(e);
             return new ResponseEntity<List<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
