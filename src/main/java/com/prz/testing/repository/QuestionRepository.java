@@ -11,4 +11,6 @@ import java.util.List;
 public interface QuestionRepository extends AbstractRepository<Question>{
 
     List<Question> getAllQuestions() throws SQLException;
+
+    Question getQuestionByQAId(Long questionAnswerId);
 }

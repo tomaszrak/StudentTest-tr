@@ -1,5 +1,6 @@
 <div>
-
+    <h3><strong>{{$root.msg['st.questionManaging']}}</strong></h3>
+    <br>
     <div class="form-group col-md-3 col-md-offset-1">
         <form name="questionForm" class="form-horizontal">
             <label for="name"><strong>{{$root.msg['st.name']}}</strong></label>
@@ -25,7 +26,6 @@
             <th>{{$root.msg['st.timeForAnswer']}}</th>
             <th>{{$root.msg['st.createDate']}}</th>
             <th>{{$root.msg['st.creator']}}</th>
-            <th>{{$root.msg['st.answers']}}</th>
             <th>{{$root.msg['st.actions']}}</th>
         </tr>
         <tr ng-repeat="question in questions">
@@ -34,7 +34,6 @@
             <td>{{ question.timeForAnswer}}</td>
             <td>{{ question.createDate | date : 'yyyy-MM-dd'}}</td>
             <td>{{ question.creator.firstName}} {{question.creator.lastName}}</td>
-            <td><button class="btn btn-primary" ng-click="showAnswers()">{{$root.msg['st.showAnswers']}}</button></td>
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -42,12 +41,15 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="" ng-click="editQuestion(question.id)">{{$root.msg['st.edit']}}</a></li>
-                        <li><a href="" ng-click="addAnswer(question.id)">{{$root.msg['st.addAnswer']}}</a></li>
-                        <li><a href="" ng-click="showPreview(question.id)">{{$root.msg['st.preview']}}</a></li>
+                        <li><a href="" ng-click="editQuestion(question)">{{$root.msg['st.edit']}}</a></li>
+                        <li><a href="" ng-click="addAnswer(question)">{{$root.msg['st.addAnswer']}}</a></li>
+                        <li><a href="" ng-click="showPreview(question)">{{$root.msg['st.preview']}}</a></li>
                     </ul>
                 </div>
             </td>
+        </tr>
+        <tr ng-show="!tests.length">
+            <td colspan="6" class="cell_center no-result">{{$root.msg['st.noResults']}}</td>
         </tr>
     </table>
 

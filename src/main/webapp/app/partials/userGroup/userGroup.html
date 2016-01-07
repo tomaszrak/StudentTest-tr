@@ -1,0 +1,44 @@
+<div>
+    <button class="btn btn-default" ng-click="addUserGroup()">{{$root.msg['st.addUserGroup']}}</button>
+    <br/>
+    <br/>
+
+    <div>
+        <table class="table table-bordered table-stripped">
+            <tr class="header">
+                <th>{{$root.msg['st.groupName']}}</th>
+                <th>{{$root.msg['st.creator']}}</th>
+                <th>{{$root.msg['st.createDate']}}</th>
+                <th>{{$root.msg['st.users']}}</th>
+                <th>{{$root.msg['st.tests']}}</th>
+                <th>{{$root.msg['st.actions']}}</th>
+            </tr>
+            <tr ng-repeat="group in groups">
+                <td>{{group.groupName}}</td>
+                <td>{{group.creator.firstName}} {{groupName.creator.lastName}}</td>
+                <td>{{group.createDate | date : 'yyyy-MM-dd'}}</td>
+                <td>
+                    <p ng-repeat="user in group.users">{{user.firstName}} {{user.lastName}}</p>
+                </td>
+                <td>
+                    <p ng-repeat="test in group.tests">{{test.name}}
+                </td>
+                <td>
+                    <div class="btn-group   ">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            {{$root.msg['st.actions']}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="" ng-click="editGroup(group)">{{$root.msg['st.editGroup']}}</a></li>
+                            <li><a href="" ng-click="assignTests(group)">{{$root.msg['st.assignTests']}}</a></li>
+                            <li><a href="" ng-click="removeGroup(group)">{{$root.msg['st.removeGroup']}}</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+    </div>
+</div>

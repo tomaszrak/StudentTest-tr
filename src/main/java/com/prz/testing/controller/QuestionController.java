@@ -39,10 +39,10 @@ public class QuestionController extends PaginationController<Question> {
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public ResponseEntity<Void> addQuestion(@RequestBody Question question) throws SQLException {
         try {
-            questionService.addQuestint(question);
+            questionService.addQuestion(question);
             return new ResponseEntity(HttpStatus.OK);
         } catch(Exception e){
-            logger.error("Exception occured during invocation of addQuestion()", e);
+            logger.error("Exception occurred during invocation of addQuestion()", e);
             return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

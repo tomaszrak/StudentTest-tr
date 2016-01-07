@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         UserDetails userDetails = null;
         try {
-            com.prz.testing.domain.User userData = userRepository.getByIndexNumber(new Long(indexNumber));
+            com.prz.testing.domain.User userData = userRepository.getByIndexNumber(indexNumber);
             userDetails = new User(userData.getIndexNumber().toString(), userData.getPassword(), true, true, true, true, getAuthirities(userData.getRole().getName()));
 
         } catch (SQLException e) {

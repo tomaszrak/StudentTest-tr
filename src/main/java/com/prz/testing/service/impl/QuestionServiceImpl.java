@@ -1,11 +1,13 @@
 package com.prz.testing.service.impl;
 
+import com.prz.testing.controller.UserData;
 import com.prz.testing.criteria.Criteria;
 import com.prz.testing.domain.Question;
 import com.prz.testing.domain.User;
 import com.prz.testing.repository.QuestionRepository;
 import com.prz.testing.repository.UserRepository;
 import com.prz.testing.service.QuestionService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,11 @@ public class QuestionServiceImpl implements QuestionService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserData userData;
+
+    private Logger logger = Logger.getLogger(QuestionServiceImpl.class);
+
     public List<Question> getWithCriteriaPaginatedQuestions(Criteria criteria) throws SQLException {
         if(null == criteria.getOrderParam() || null == criteria.getOrderWay()){
             criteria.setOrderWay("ASC");
@@ -39,8 +46,12 @@ public class QuestionServiceImpl implements QuestionService{
         return questionRepository.getAllQuestions();
     }
 
-    public void addQuestint(Question question) throws SQLException {
-        question.setCreator(userRepository.getByIndexNumber(new Long("123456")));
+    public Question getQuestionByQAId(Long questionAnswerId) {
+        return questionRepository.getQuestionByQAId(questionAnswerId);
+    }
+
+    public void addQuestion(Question question) throws SQLException {
+        question.setCreator(userRepository.getByIndexNumber(userData.getIndexNumber()));
         question.setCreateDate(new Date());
         questionRepository.save(question);
     }

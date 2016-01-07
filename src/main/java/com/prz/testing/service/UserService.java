@@ -28,4 +28,6 @@ public interface UserService {
     Integer countUsersWithCriteria(Criteria criteria);
 
     void updateUser(User user) throws SQLException;
+
+    public User getUserByIndex(String indexNumber) throws SQLException;
 }

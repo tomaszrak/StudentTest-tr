@@ -1,0 +1,101 @@
+<div>
+    <h3>{{$root.msg['st.testManaging']}}</h3>
+
+    <div class="col-md-offset-10">
+        <button type="button" class="btn btn-default" ng-click="showPreview()">{{$root.msg['st.preview']}}</button>
+    </div>
+    <div class="col-md-4">
+        <h4>{{$root.msg['st.questionType']}}</h4>
+
+        <div class="grid">
+            <button class="btn btn-default" ng-click="addRadioQ()"><span class="glyphicon glyphicon-record"></span>
+            </button>
+            <button class="btn btn-default" ng-click="addCheckQ()"><span class="glyphicon glyphicon-check"></span>
+            </button>
+            <button class="btn btn-default" ng-click="addTextQ()">T</button>
+            <button class="btn btn-default" ng-click="addNumberQ()">N</span></button>
+        </div>
+        <br/>
+
+        <div>
+            <button class="btn btn-default">{{$root.msg['st.importQuestions']}}</button>
+        </div>
+        <br/>
+
+        <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="{{$root.msg['st.search']}}"/>
+            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
+
+        <div class="list">
+            <div ng-repeat="test in tests">
+                <p>{{test.name}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-offset-4">
+        <br/>
+
+        <div class="col-md-11">
+            <input type="text" ng-model="test.name" class="form-control titleInput"
+                   placeholder="{{$root.msg['st.testName']}}"/>
+            <br/>
+            <input type="text" ng-model="test.subject" class="form-control "
+                   placeholder="{{$root.msg['st.subject']}}"/>
+            <br/>
+            <textarea ng-model="test.description" class="form-control"
+                      placeholder="{{$root.msg['st.testDescription']}}"/>
+
+            <br/>
+
+            <div ng-repeat="question in questionAnswers" class="list-items col-md-12">
+                <div class="col-md-10">
+                    <div class="col-md-10">
+                        {{$index + 1}}. {{ question[0].question.name }}
+                    </div>
+                </div>
+                <br/>
+
+                <div ng-show="question[0].question.type == 'ONE_ANSWER'">
+                    <div class="list-item">
+
+                        <div class="col-md-11" ng-repeat="answer in question">
+                            <div class="col-md-1">
+                                <input type="radio"/>
+                            </div>
+                            <div class="col-md-9">
+                                {{answer.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+                <div ng-show="question[0].question.type == 'MULTIPLE'" class="col-md-1">
+                    <div class="list-item">
+
+                        <div class="col-md-11" ng-repeat="answer in question">
+                            <div class="col-md-1">
+                                <input type="checkbox"/>
+                            </div>
+                            <div class="col-md-9">
+                                {{answer.name}}
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+                <div ng-show="question[0].question.type == 'SHORT_ANSWER'"><input type="text" class="form-control"/>
+                </div>
+                <div ng-show="question[0].question.type == 'NUMBER'"><input type="number" class="form-control"></div>
+                <br />
+                <div>
+                    <button class="btn btn-default" ng-click="removeQuestion($index)">{{$root.msg['st.remove']}}</button>
+                </div>
+                <hr>
+            </div>
+            <button ng-click="saveTest()" type="submit" class="btn btn-primary">{{$root.msg['st.save']}}</button>
+        </div>
+
+    </div>
+</div>

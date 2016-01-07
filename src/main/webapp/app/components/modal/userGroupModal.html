@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h1>HEADER</h1>
+</div>
+<div class="modal-body groupModal">
+    <div class="form-group">
+        <label class="col-md-3" for="name">{{$root.msg['st.groupName']}}</label>
+
+        <div class="col-md-6">
+            <input name="name" ng-model="group.groupName" class="form-control" type="text"/>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div>
+        <div class="col-md-6 pre-scrollable">
+            <div ng-repeat="user in users">
+                <div class="col-md-8">{{user.firstName}} {{user.lastName}}</div>
+                <div class="col-md-3">
+                    <button class="btn btn-default" ng-click="addUser($index, user)">
+                        <span class="glyphicon glyphicon-plus"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6 pre-scrollable">
+        <div ng-repeat="user in groupUsers">
+            <div class="col-md-8">{{user.firstName}} {{user.lastName}}</div>
+            <div class="col-md-3">
+                <button class="btn btn-default" ng-click="removeUser($index, user)">
+                    <span class="glyphicon glyphicon-remove"/>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal-header">
+    <button class="btn btn-success" ng-click="save()">{{$root.msg['st.save']}}</button>
+    <button class="btn btn-primary" ng-click="close()">{{$root.msg['st.cancel']}}</button>
+</div>

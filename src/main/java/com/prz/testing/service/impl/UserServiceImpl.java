@@ -37,6 +37,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.getById(id);
     }
 
+    public User getUserByIndex(String indexNumber) throws SQLException{
+        return userRepository.getByIndexNumber(indexNumber);
+    }
+
     public void saveUser(User user) throws SQLException {
         user.setRole(roleRepository.getByName(RoleName.STUDENT));
         System.out.println(user.getRole());

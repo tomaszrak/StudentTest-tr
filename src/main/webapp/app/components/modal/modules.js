@@ -3,5 +3,8 @@
  */
 angular.module('stApp.modals', [
     'st.answerModal',
-    'stApp.questionPreview'
+    'stApp.questionPreview',
+    'stApp.questionAnswer',
+    'stApp.userGroupEdit',
+    'stApp.testAssign'
 ])

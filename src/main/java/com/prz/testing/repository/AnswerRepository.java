@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface AnswerRepository extends AbstractRepository<Answer>{
 
-   List<Answer> getAnswersByQuestion(Question question) throws SQLException;
+   List<Answer> getAnswersByQuestion(Long questionId) throws SQLException;
 }

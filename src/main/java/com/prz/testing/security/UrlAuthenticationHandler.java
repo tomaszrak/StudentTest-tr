@@ -1,8 +1,14 @@
 package com.prz.testing.security;
 
+import com.prz.testing.controller.UserData;
+import com.prz.testing.domain.User;
 import com.prz.testing.enumerate.RoleName;
+import com.prz.testing.service.UserService;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -14,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collection;
 
 /**
@@ -21,6 +28,8 @@ import java.util.Collection;
  */
 @Component
 public class UrlAuthenticationHandler implements AuthenticationSuccessHandler {
+
+    Logger logger = Logger.getLogger(UrlAuthenticationHandler.class);
 
     public RedirectStrategy getRedirectStrategy() {
         return redirectStrategy;
@@ -32,9 +41,15 @@ public class UrlAuthenticationHandler implements AuthenticationSuccessHandler {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+    @Autowired
+    private UserService userService;
+
+//    @Autowired
+//    private UserData userData;
+
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         handle(httpServletRequest, httpServletResponse, authentication);
-        clearAuthenticationAttributes(httpServletRequest);
+        //clearAuthenticationAttributes(httpServletRequest);
     }
 
     protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {

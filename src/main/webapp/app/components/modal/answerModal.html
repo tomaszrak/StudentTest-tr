@@ -2,14 +2,12 @@
     <h1>HEADER</h1>
 </div>
 <div class="modal-body">
-    <form name="answerForm" class="form-horizontal">
-        <div class="form-group">
-            <label class="col-md-3" for="content">{{$root.msg['st.answerName']}}</label>
-            <div class="col-md-6"><textarea ng-maxlength="100px"
-                                            name="content" ng-model="answer.name" class="form-control" type="text" /></div>
-        </div>
-    </form>
+    <div class="form-group">
+        <label class="col-md-3" for="name">{{$root.msg['st.answerName']}}</label>
 
+        <div class="col-md-6"><textarea
+                name="content" ng-model="answer.name" class="form-control" type="text"/></div>
+    </div>
 </div>
 <div class="modal-header">
     <button class="btn btn-success" ng-click="save(answer)">{{$root.msg['st.save']}}</button>

@@ -14,7 +14,7 @@ public class Answer {
     @SequenceGenerator(name = "answerId", sequenceName = "ANSWER_ID_SEQ")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 

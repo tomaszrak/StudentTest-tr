@@ -13,10 +13,11 @@ public interface QuestionService {
 
     List<Question> getWithCriteriaPaginatedQuestions(Criteria criteria) throws SQLException;
 
-    void addQuestint(Question question) throws SQLException;
+    void addQuestion(Question question) throws SQLException;
 
     Integer countWithCriteriaQuestions(Criteria criteria) throws SQLException;
 
     List<Question> getAll() throws SQLException;
 
+    Question getQuestionByQAId(Long questionAnswerId);
 }

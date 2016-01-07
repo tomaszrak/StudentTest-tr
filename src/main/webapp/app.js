@@ -4,13 +4,15 @@ angular.module('stApp', ['ngRoute',
     'stApp.partials',
     'stApp.services',
     'stApp.modals',
-    'stApp.filter'])
+    'stApp.filter',
+    'stApp.common'])
 
-    .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
-        $routeProvider.otherwise({redirectTo: '/login'});
+    .config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
+        $routeProvider.otherwise({redirectTo: '/main'});
         $routeProvider.when('/login', {
-            templateUrl: 'app/partials/login/login.html'
-        });
+            templateUrl: '/login.html'
+        })
+        $locationProvider.html5Mode(false);
 
     }])
 
@@ -25,5 +27,11 @@ angular.module('stApp', ['ngRoute',
                 query: {method: 'GET', params: {}, isArray: false}
             });
         $rootScope.msg = messages.query();
+
+        var user = $resource('../rest/user',
+            {}, {
+                query: {method: 'POST', params: {}, isArray: false}
+            });
+        $rootScope.user = user.query();
 
     }])

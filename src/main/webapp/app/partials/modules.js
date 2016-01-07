@@ -4,5 +4,8 @@
 angular.module('stApp.partials',[
     'stApp.question',
     'stApp.main',
-    'stApp.users'
+    'stApp.users',
+    'stApp.test',
+    'stApp.userGroup',
+    'stApp.testSolution'
 ])

@@ -2,10 +2,21 @@
     <h1>HEADER</h1>
 </div>
 <div class="modal-body">
-    fff
+    <p><strong>{{ question.name }}</strong></p>
 
+    <div class="list-item">
+        <div ng-repeat="answer in answers">
+            <div ng-show="question.type == 'ONE_ANSWER'" class="col-md-1"><input type="radio" ng-disabled="true"/></div>
+            <div ng-show="question.type == 'MULTIPLE'" class="col-md-1"><input type="checkbox"/></div>
+            <div ng-show="question.type == 'SHORT_ANSWER'"><input type="text" class="form-control"/></div>
+            <div ng-show="question.type == 'NUMBER'"><input type="number" class="form-control"></div>
+            <div ng-hide="question.type == 'NUMBER' || question.type == 'SHORT_ANSWER' || question.type == 'TRUE_FALSE' " class="col-md-9">
+                {{answer.name}}
+            </div>
+        </div>
+    </div>
 </div>
 <div class="modal-header">
     <button class="btn btn-success" ng-click="save()">{{$root.msg['st.save']}}</button>
-    <button class="btn btn-primary" ng-click="cancel()">{{$root.msg['st.cancel']}}</button>
+    <button class="btn btn-primary" ng-click="close()">{{$root.msg['st.cancel']}}</button>
 </div>

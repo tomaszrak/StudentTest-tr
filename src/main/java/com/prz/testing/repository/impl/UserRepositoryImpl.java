@@ -49,7 +49,7 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<User> implements 
         return users;
     }
 
-    public User getByIndexNumber(Long indexNumber) throws SQLException {
+    public User getByIndexNumber(String indexNumber) throws SQLException {
         return (User) getCurrentSession().createCriteria(User.class)
                 .add(Restrictions.eq("indexNumber", indexNumber)).uniqueResult();
     }

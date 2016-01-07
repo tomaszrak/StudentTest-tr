@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html ng-app="stApp">
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <link rel="stylesheet" href="app/libs/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="app/libs/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="app/libs/angular-xeditable/dist/css/xeditable.css">
     <link rel="stylesheet" href="app/css/custom.css">
 </head>
-<body ng-controller="IndexCtrl">
+<body ng-controller="IndexCtrl" ng-cloak>
 <div>
+    <div class="alert-container">
+        <alert class="alert-frame" ng-repeat="alert in alerts"
+               type="{{alert.type}}" close="alertService.closeAlert($index)">{{alert.msg}}</alert>
+    </div>
     <nav class="navbar" id="header">
         <div class="navbar-header navbar-brand">
             Student test
         </div>
         <ul class="nav navbar-nav">
             <li><a href="#/main">{{$root.msg['st.main']}}</a></li>
-            <li><a href="#/question">{{$root.msg['st.questions']}}</a>
-            <li><a href="#/users">{{$root.msg['st.users']}}</a></li>
+            <li ng-show="$root.user.role.name == 'ADMIN'"><a href="#/test">{{$root.msg['st.test']}}</a></li>
+            <li ng-show="$root.user.role.name == 'ADMIN'"><a href="#/question">{{$root.msg['st.questions']}}</a>
+            <li ng-show="$root.user.role.name == 'ADMIN'"><a href="#/users">{{$root.msg['st.users']}}</a></li>
+            <li ng-show="$root.user.role.name == 'ADMIN'"><a href="#/userGroup">{{$root.msg['st.userGroup']}}</a></li>
+            <li ng-show="$root.user.role.name == 'STUDENT'"><a href="#/solveTests">{{$root.msg['st.solveTests']}}</a></li>
         </ul>
     </nav>
 
     <div class="view" ng-view></div>
 
 
-    <div class="footer text-center">
-        2015 Copyright
-    </div>
+    <!--<div class="footer text-center">-->
+        <!--2015 Copyright-->
+    <!--</div>-->
 </div>
 <script src="app/libs/jquery/dist/jquery.js"></script>
 <script src="app/libs/angular/angular.js"></script>
@@ -40,19 +48,29 @@
 <script src="app/components/services/questionSrv.js"></script>
 <script src="app/components/services/paginationSrv.js"></script>
 <script src="app/components/services/answerSrv.js"></script>
+<script src="app/components/services/testSrv.js"></script>
+<script src="app/components/services/userGroupSrv.js"></script>
 
 <script src="app/components/modal/modules.js"></script>
 <script src="app/components/modal/answerModal.js"></script>
 <script src="app/components/modal/questionPreview.js"></script>
+<script src="app/components/modal/questionAnswerModal.js"></script>
+<script src="app/components/modal/userGroupModal.js"></script>
+<script src="app/components/modal/testAssigningModal.js"></script>
 
 <script src="app/components/filter/modules.js"></script>
 <script src="app/components/filter/questionType.js"></script>
+
+<script src="app/components/common/modules.js"></script>
+<script src="app/components/common/alert.js"></script>
 
 <script src="app/partials/modules.js"></script>
 <script src="app/partials/question/question.js"></script>
 <script src="app/partials/main/main.js"></script>
 <script src="app/partials/users/users.js"></script>
-
+<script src="app/partials/test/test.js"></script>
+<script src="app/partials/userGroup/userGroup.js"></script>
+<script src="app/partials/test/testSolution.js"></script>
 
 <script src="app.js"></script>
 </body>

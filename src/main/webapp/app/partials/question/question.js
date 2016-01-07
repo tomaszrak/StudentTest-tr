@@ -15,7 +15,7 @@ angular.module('stApp.question', ['ngRoute'])
         $scope.questionTypes = [
             {type: "MULTIPLE", name: $rootScope.msg['st.multipleType']},
             {type: "ONE_ANSWER", name: $rootScope.msg['st.oneAnswer']},
-            {type: "MATCHING", name: $rootScope.msg['st.matching']},
+           // {type: "MATCHING", name: $rootScope.msg['st.matching']},
             {type: "TRUE_FALSE", name: $rootScope.msg['st.trueFalse']},
             {type: "NUMBER", name: $rootScope.msg['st.number']},
             {type: "SHORT_ANSWER", name: $rootScope.msg['st.shortAnswer']}];
@@ -28,8 +28,8 @@ angular.module('stApp.question', ['ngRoute'])
                 })
         }
 
-        $scope.addAnswer = function(questionId){
-            AnswerModalSrv.show(questionId);
+        $scope.addAnswer = function(question){
+            AnswerModalSrv.show(question    );
         }
 
         $scope.editQuestion = function(){
@@ -48,9 +48,10 @@ angular.module('stApp.question', ['ngRoute'])
                 })
         }
 
-        $scope.showPreview = function(questionId){
-            QuestionPreviewSrv.show(questionId);
+        $scope.showPreview = function(question){
+            QuestionPreviewSrv.show(question);
         }
 
         $scope.getQuestions();
+
     })

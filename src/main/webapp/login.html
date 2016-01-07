@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Messages : Create</title>
+</head>
+<body>
+<div tiles:fragment="content">
+    <form name="f" action="login" method="post">
+        <fieldset>
+            <legend>Please Login</legend>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username"/>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password"/>
+            <div class="form-actions">
+                <button type="submit" class="btn">Log in</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script src="app/libs/jquery/dist/jquery.js"></script>
+<script src="app/libs/angular/angular.js"></script>
+<script src="app/libs/angular-route/angular-route.js"></script>
+<script src="app/libs/angular-resource/angular-resource.js"></script>
+<script src="app/libs/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="app/libs/bootstrap/js/dropdown.js"></script>
+<script src="app/libs/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+<script src="app/components/services/modules.js"></script>
+<script src="app/components/services/userSrv.js"></script>
+<script src="app/components/services/questionSrv.js"></script>
+<script src="app/components/services/paginationSrv.js"></script>
+<script src="app/components/services/answerSrv.js"></script>
+
+<script src="app/components/modal/modules.js"></script>
+<script src="app/components/modal/answerModal.js"></script>
+<script src="app/components/modal/questionPreview.js"></script>
+
+<script src="app/components/filter/modules.js"></script>
+<script src="app/components/filter/questionType.js"></script>
+
+<script src="app/partials/modules.js"></script>
+<script src="app/partials/question/question.js"></script>
+<script src="app/partials/main/main.js"></script>
+<script src="app/partials/users/users.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

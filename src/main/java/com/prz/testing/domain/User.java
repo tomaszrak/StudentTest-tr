@@ -1,5 +1,6 @@
 package com.prz.testing.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.prz.testing.enumerate.Status;
 
 import javax.persistence.*;
@@ -29,8 +30,9 @@ public class User {
     private Date createDate;
 
     @Column(name = "INDEX_NUMBER", nullable = false)
-    private Long indexNumber;
+    private String indexNumber;
 
+    @JsonIgnore
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
@@ -81,11 +83,11 @@ public class User {
         this.createDate = createDate;
     }
 
-    public Long getIndexNumber() {
+    public String getIndexNumber() {
         return indexNumber;
     }
 
-    public void setIndexNumber(Long indexNumber) {
+    public void setIndexNumber(String indexNumber) {
         this.indexNumber = indexNumber;
     }
 

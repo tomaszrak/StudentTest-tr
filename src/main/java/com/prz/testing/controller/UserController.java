@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +37,9 @@ public class UserController extends PaginationController<User> {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private UserData userData;
+
     private Logger logger = Logger.getLogger(UserController.class);
 
     @Override
@@ -46,6 +51,7 @@ public class UserController extends PaginationController<User> {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<User> getAll() throws SQLException {
+        logger.info("last name = " + userData.getLastName());
         return userService.getAllUsers();
     }
 

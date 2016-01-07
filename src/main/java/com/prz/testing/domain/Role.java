@@ -3,6 +3,7 @@ package com.prz.testing.domain;
 import com.prz.testing.enumerate.RoleName;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by Roman on 16.09.2015.
  */
 @Entity(name = "ROLE")
-public class Role {
+public class Role implements Serializable{
 
     @Id
     @SequenceGenerator(name = "ROLE_ID_GENERATOR", sequenceName = "ROLE_ID_SEQ")

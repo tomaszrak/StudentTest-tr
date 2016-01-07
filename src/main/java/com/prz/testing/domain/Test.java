@@ -3,6 +3,7 @@ package com.prz.testing.domain;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -25,23 +26,29 @@ public class Test {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_group_id", referencedColumnName = "id")
-    private UserGroup userGroup;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id", referencedColumnName = "id")
-    private Subject subject;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "subject_id", referencedColumnName = "id")
+//    private Subject subject;
+    @Column(name = "subject")
+    private String subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "TEST_QUESTION",
-            joinColumns = {@JoinColumn(name = "TEST_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "QUESTION_ID")})
-    private Set<Question> questions = new HashSet<Question>();
+            joinColumns = @JoinColumn(name = "TEST_ID"),
+            inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
+    private Set<Question> questions ;
+
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
+    }
 
     public long getId() {
         return id;
@@ -75,19 +82,11 @@ public class Test {
         this.description = description;
     }
 
-    public UserGroup getUserGroup() {
-        return userGroup;
-    }
-
-    public void setUserGroup(UserGroup userGroup) {
-        this.userGroup = userGroup;
-    }
-
-    public Subject getSubject() {
+    public String getSubject() {
         return subject;
     }
 
-    public void setSubject(Subject subject) {
+    public void setSubject(String subject) {
         this.subject = subject;
     }
 

@@ -2,6 +2,8 @@ package com.prz.testing.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Roman on 27.09.2015.
@@ -17,12 +19,32 @@ public class UserGroup {
     @Column(name = "NAME", nullable = false)
     private String groupName;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREATOR_ID", referencedColumnName = "id")
     private User creator;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_GROUP_TEST",
+        joinColumns = @JoinColumn(name = "USER_GROUP_ID"),
+        inverseJoinColumns = @JoinColumn(name = "TEST_ID"))
+    private Set<Test> tests;
+
     @Column(name = "CREATE_DATE", nullable = true)
     private Date createDate;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_GROUP_USERS",
+            joinColumns = @JoinColumn(name = "USER_GROUP_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+    private Set<User> users;
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
     public Long getId() {
         return id;
@@ -54,5 +76,13 @@ public class UserGroup {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Set<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(Set<Test> tests) {
+        this.tests = tests;
     }
 }

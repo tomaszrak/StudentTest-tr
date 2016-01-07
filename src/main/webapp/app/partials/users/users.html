@@ -1,4 +1,5 @@
 <div>
+    <h3>{{$root.msg['st.userManaging']}}</h3>
     <div class="form-group col-md-3 col-md-offset-1">
         <form name="userForm" class="form-horizontal form-group">
             <label for="lastName"><strong>{{$root.msg['st.lastName']}}</strong></label>
@@ -51,6 +52,9 @@
                     </ul>
                 </div>
             </td>
+        </tr>
+        <tr ng-show="!tests.length">
+            <td colspan="6" class="cell_center no-result">{{$root.msg['st.noResults']}}</td>
         </tr>
     </table>
 </div>

@@ -5,5 +5,7 @@ angular.module('stApp.services', [
     'stApp.userSrv',
     'stApp.questionSrv',
     'stApp.paginationSrv',
-    'stApp.answerSrv'
+    'stApp.answerSrv',
+    'stApp.testSrv',
+    'stApp.userGroupSrv'
 ])

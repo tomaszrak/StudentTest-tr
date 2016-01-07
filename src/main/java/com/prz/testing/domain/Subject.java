@@ -17,7 +17,7 @@ public class Subject {
     private String name;
 
     @Column(name = "DESCRIPTION", nullable = true)
-    private String descriptio;
+    private String description;
 
     @Column(name = "CREATE_DATE", nullable = false)
     private Date createDate;
@@ -46,12 +46,12 @@ public class Subject {
         this.name = name;
     }
 
-    public String getDescriptio() {
-        return descriptio;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptio(String descriptio) {
-        this.descriptio = descriptio;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Date getCreateDate() {

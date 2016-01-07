@@ -3,6 +3,12 @@ angular.module('stApp.answerSrv', [])
         return {
             answer : function(answer){
                 return $http.post('../rest/answer/', answer);
+            },
+            answersByQuestionId : function(questionId){
+                return $http.post('../rest/answer/question', questionId);
+            },
+            questionAnswer : function(questionAnswer){
+                return $http.post('../rest/answer/questionAnswer', questionAnswer);
             }
         }
     })
