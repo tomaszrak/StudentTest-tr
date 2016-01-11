@@ -3,6 +3,8 @@ package com.prz.testing.service;
 import com.prz.testing.criteria.AnswerCriteria;
 import com.prz.testing.domain.Answer;
 import com.prz.testing.domain.Question;
+import com.prz.testing.domain.QuestionAnswer;
+import com.prz.testing.dto.QuestionCAnswer;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,5 +20,7 @@ public interface AnswerService {
 
     void saveAnswerWithQuestion(Answer answer) throws SQLException;
 
-    List<Answer> saveAnswersQuestion(AnswerCriteria criteria) throws SQLException;
+    QuestionCAnswer saveAnswersQuestion(AnswerCriteria criteria) throws SQLException;
+
+    void saveAnswer(QuestionAnswer answer) throws SQLException;
 }

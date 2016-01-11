@@ -16,8 +16,14 @@ angular.module('stApp', ['ngRoute',
 
     }])
 
-    .controller('IndexCtrl', function ($scope) {
+    .controller('IndexCtrl', function ($scope, $http, $window) {
         $scope.testData = "data";
+
+        $scope.logout = function(){
+            $http.get("/logout").success(function(){
+                $window.open("../login", "_self");
+            });
+        }
     })
 
     .run(['$rootScope', '$resource', function ($rootScope, $resource) {

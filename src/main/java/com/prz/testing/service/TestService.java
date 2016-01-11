@@ -1,8 +1,8 @@
 package com.prz.testing.service;
 
 import com.prz.testing.criteria.TestCriteria;
+import com.prz.testing.domain.QuestionAnswer;
 import com.prz.testing.domain.Test;
-import com.prz.testing.dto.TestQA;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,5 +15,7 @@ public interface TestService {
 
     void saveTest(TestCriteria criteria) throws SQLException;
 
-    TestQA getTest(Long id) throws SQLException;
+    Test getTest(Long id) throws SQLException;
+
+    void solveTest(List<QuestionAnswer> answers) throws SQLException;
 }

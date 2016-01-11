@@ -1,5 +1,6 @@
 package com.prz.testing.repository.impl;
 
+import com.prz.testing.domain.CorrectAnswer;
 import com.prz.testing.domain.Question;
 import com.prz.testing.repository.QuestionRepository;
 import org.hibernate.criterion.Restrictions;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Roman on 06.10.2015.
@@ -21,16 +24,31 @@ public class QuestionRepositoryImpl extends AbstractRepositoryImpl<Question> imp
         super(Question.class);
     }
 
-    public List<Question> getAllQuestions() throws SQLException {
-        List<Question> questions = getCurrentSession().createCriteria(Question.class)
-                .createAlias("creator", "user", JoinType.LEFT_OUTER_JOIN).list();
-
+    public Set<Question> getAllQuestions() throws SQLException {
+        Set<Question> questions = new HashSet<Question>(getCurrentSession().createCriteria(Question.class)
+                .createAlias("creator", "user", JoinType.LEFT_OUTER_JOIN).list());
         return questions;
     }
 
-    public Question getQuestionByQAId(Long questionAnswerId) {
+    public Question getById(Long questionId) {
         Question question = (Question) getCurrentSession().createCriteria(Question.class)
-                .add(Restrictions.eq("questionAnswerId", questionAnswerId)).uniqueResult();
+                .add(Restrictions.eq("id", questionId)).uniqueResult();
         return question;
+    }
+
+    public void setCorrectAnswer(CorrectAnswer correctAnswer) throws SQLException {
+        getCurrentSession().save(correctAnswer);
+    }
+
+    public List<CorrectAnswer> getCorrectAnswersForQuestions(List<Long> questionIds) throws SQLException {
+        List<CorrectAnswer> answers = getCurrentSession().createCriteria(CorrectAnswer.class)
+                .createAlias("question", "question").add(Restrictions.in("question.id", questionIds)).list();
+        return answers;
+    }
+
+    public List<CorrectAnswer> getCAnswerByQuestion(Long questionId) throws SQLException {
+        List<CorrectAnswer> answers = getCurrentSession().createCriteria(CorrectAnswer.class)
+                .createAlias("question", "question").add(Restrictions.eq("question.id", questionId)).list();
+        return null;
     }
 }

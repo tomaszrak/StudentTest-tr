@@ -12,7 +12,8 @@
 <div>
     <div class="alert-container">
         <alert class="alert-frame" ng-repeat="alert in alerts"
-               type="{{alert.type}}" close="alertService.closeAlert($index)">{{alert.msg}}</alert>
+               type="{{alert.type}}" close="alertService.closeAlert($index)">{{alert.msg}}
+        </alert>
     </div>
     <nav class="navbar" id="header">
         <div class="navbar-header navbar-brand">
@@ -24,7 +25,11 @@
             <li ng-show="$root.user.role.name == 'ADMIN'"><a href="#/question">{{$root.msg['st.questions']}}</a>
             <li ng-show="$root.user.role.name == 'ADMIN'"><a href="#/users">{{$root.msg['st.users']}}</a></li>
             <li ng-show="$root.user.role.name == 'ADMIN'"><a href="#/userGroup">{{$root.msg['st.userGroup']}}</a></li>
-            <li ng-show="$root.user.role.name == 'STUDENT'"><a href="#/solveTests">{{$root.msg['st.solveTests']}}</a></li>
+            <li ng-show="$root.user.role.name == 'STUDENT'"><a href="#/solveTests">{{$root.msg['st.solveTests']}}</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right navbar-user">
+            <li><a href="#" ng-click="logout()">{{$root.msg['st.logout']}}</a></li>
         </ul>
     </nav>
 
@@ -32,7 +37,7 @@
 
 
     <!--<div class="footer text-center">-->
-        <!--2015 Copyright-->
+    <!--2015 Copyright-->
     <!--</div>-->
 </div>
 <script src="app/libs/jquery/dist/jquery.js"></script>

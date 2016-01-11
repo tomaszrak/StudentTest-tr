@@ -49,7 +49,7 @@ angular.module('stApp.question', ['ngRoute'])
         }
 
         $scope.showPreview = function(question){
-            QuestionPreviewSrv.show(question);
+            QuestionPreviewSrv.show({question: question});
         }
 
         $scope.getQuestions();

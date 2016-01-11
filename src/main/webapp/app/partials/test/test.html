@@ -52,17 +52,17 @@
             <div ng-repeat="question in questionAnswers" class="list-items col-md-12">
                 <div class="col-md-10">
                     <div class="col-md-10">
-                        {{$index + 1}}. {{ question[0].question.name }}
+                        <strong>{{$index + 1}}. {{ question.question.name }}</strong>
                     </div>
                 </div>
                 <br/>
 
-                <div ng-show="question[0].question.type == 'ONE_ANSWER'">
+                <div ng-show="question.question.type == 'ONE_ANSWER'">
                     <div class="list-item">
 
-                        <div class="col-md-11" ng-repeat="answer in question">
+                        <div class="col-md-11" ng-repeat="answer in question.question.answers">
                             <div class="col-md-1">
-                                <input type="radio"/>
+                                <input type="radio" ng-model="question.question.correctAnswer" ng-value="answer"/>
                             </div>
                             <div class="col-md-9">
                                 {{answer.name}}
@@ -71,12 +71,12 @@
                     </div>
                     <br/>
                 </div>
-                <div ng-show="question[0].question.type == 'MULTIPLE'" class="col-md-1">
+                <div ng-show="question.question.type == 'MULTIPLE'">
                     <div class="list-item">
 
-                        <div class="col-md-11" ng-repeat="answer in question">
+                        <div class="col-md-11" ng-repeat="answer in question.question.answers">
                             <div class="col-md-1">
-                                <input type="checkbox"/>
+                                <input type="checkbox" ng-model="question.question.correctAnswer" ng-value="answer"/>
                             </div>
                             <div class="col-md-9">
                                 {{answer.name}}
@@ -85,12 +85,13 @@
                     </div>
                     <br/>
                 </div>
-                <div ng-show="question[0].question.type == 'SHORT_ANSWER'"><input type="text" class="form-control"/>
+                <div ng-show="question.question.type == 'SHORT_ANSWER'"><input type="text" class="form-control"/>
                 </div>
-                <div ng-show="question[0].question.type == 'NUMBER'"><input type="number" class="form-control"></div>
+                <div ng-show="question.question.type == 'NUMBER'"><input type="number" class="form-control"></div>
                 <br />
                 <div>
                     <button class="btn btn-default" ng-click="removeQuestion($index)">{{$root.msg['st.remove']}}</button>
+                    <button class="btn btn-defaulr" ng-click="setAnswer(question)">{{$root.msg['st.setAnswer']}}</button>
                 </div>
                 <hr>
             </div>

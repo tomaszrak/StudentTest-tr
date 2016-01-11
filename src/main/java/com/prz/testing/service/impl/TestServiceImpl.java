@@ -2,11 +2,7 @@ package com.prz.testing.service.impl;
 
 import com.prz.testing.controller.UserData;
 import com.prz.testing.criteria.TestCriteria;
-import com.prz.testing.domain.Answer;
-import com.prz.testing.domain.Question;
-import com.prz.testing.domain.Test;
-import com.prz.testing.domain.UserGroup;
-import com.prz.testing.dto.TestQA;
+import com.prz.testing.domain.*;
 import com.prz.testing.repository.QuestionRepository;
 import com.prz.testing.repository.TestRepository;
 import com.prz.testing.repository.UserGroupRepository;
@@ -20,21 +16,21 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by ROLO on 07.12.2015.
  */
 @Service
 @Transactional
-public class TestServiceImpl implements TestService{
+public class TestServiceImpl implements TestService {
 
     @Autowired
     private TestRepository testRepository;
 
     @Autowired
-    private QuestionService questionService;
+    private QuestionRepository questionRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -59,21 +55,52 @@ public class TestServiceImpl implements TestService{
         testRepository.saveTest(criteria.getTest());
     }
 
-    public TestQA getTest(Long userId) throws SQLException{
+    public Test getTest(Long userId) throws SQLException {
         UserGroup userGroup = userGroupRepository.getUserGroupByUser(userId);
 
-        TestQA testQA = new TestQA();
-        testQA.setTest(userGroup.getTests().iterator().next());
-        Set<Question> questions = testQA.getTest().getQuestions();
+        Test test = userGroup.getTests().iterator().next();
 
-        List<Answer> answers = new ArrayList<Answer>();
+        return test;
+    }
 
-        for(Question question : questions){
-            answers.addAll(answerService.getAllAnswersForQuestion(question.getId()));
+    public void solveTest(List<QuestionAnswer> answers) throws SQLException {
+        for (QuestionAnswer answer : answers) {
+            answer.setCreateDate(new Date());
+            answerService.saveAnswer(answer);
         }
 
-        testQA.setAnswers(answers);
-        return testQA;
+        createSummary(answers);
+    }
+
+    public void createSummary(List<QuestionAnswer> answers) throws SQLException {
+        List<Long> ids = new ArrayList<Long>();
+        List<Question> questions = new ArrayList<Question>();
+
+        int correctAnswersNumber = 0;
+
+        for (QuestionAnswer answer : answers) {
+            Question question = answer.getQuestion();
+            ids.add(question.getId());
+            questions.add(question);
+        }
+
+
+        List<CorrectAnswer> correctAnswers = getCorrectAnswersForQuestions(ids);
+
+        for (QuestionAnswer answer : answers) {
+            for(CorrectAnswer cAnswer : correctAnswers){
+                if (answer.getAnswer() == cAnswer.getAnswer()){
+                    ++correctAnswersNumber;
+                    break;
+                } else{
+                    continue;
+                }
+            }
+        }
+    }
+
+    public List<CorrectAnswer> getCorrectAnswersForQuestions(List<Long> ids) throws SQLException {
+        return questionRepository.getCorrectAnswersForQuestions(ids);
     }
 
 

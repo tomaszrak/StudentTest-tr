@@ -9,6 +9,9 @@ angular.module('stApp.testSrv', [])
                 },
                 testToSolve : function(userId){
                     return $http.post('../rest/test/toSolve', userId);
+                },
+                solvedTest : function(answers){
+                    return $http.post('../rest/test/resolved', answers);
                 }
             }
         })

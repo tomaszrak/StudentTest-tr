@@ -5,10 +5,24 @@ angular.module('stApp.test', [])
             controller: 'TestCtrl'
         })
     }])
-    .controller('TestCtrl', ['$scope', '$rootScope', 'TestSrv', 'alert', 'QuestionAnswerSrv',
-        function ($scope, $rootScope, TestSrv, alert, QuestionAnswerSrv) {
+    .controller('TestCtrl', ['$scope', '$rootScope', 'TestSrv', 'alert', 'QuestionAnswerSrv', 'QuestionPreviewSrv',
+        function ($scope, $rootScope, TestSrv, alert, QuestionAnswerSrv, QuestionPreviewSrv) {
 
             $scope.test = {}
+
+            $scope.correctAnswers = [];
+
+            $scope.questions = [];
+
+            $scope.questionAnswers = [];
+
+            $scope.questionTypes = [
+                {type: "MULTIPLE", name: $rootScope.msg['st.multipleType']},
+                {type: "ONE_ANSWER", name: $rootScope.msg['st.oneAnswer']},
+                // {type: "MATCHING", name: $rootScope.msg['st.matching']},
+                {type: "TRUE_FALSE", name: $rootScope.msg['st.trueFalse']},
+                {type: "NUMBER", name: $rootScope.msg['st.number']},
+                {type: "SHORT_ANSWER", name: $rootScope.msg['st.shortAnswer']}];
 
             $scope.getAllTests = function () {
                 TestSrv.tests()
@@ -19,18 +33,7 @@ angular.module('stApp.test', [])
                     })
             }
 
-            $scope.questionTypes = [
-                {type: "MULTIPLE", name: $rootScope.msg['st.multipleType']},
-                {type: "ONE_ANSWER", name: $rootScope.msg['st.oneAnswer']},
-                // {type: "MATCHING", name: $rootScope.msg['st.matching']},
-                {type: "TRUE_FALSE", name: $rootScope.msg['st.trueFalse']},
-                {type: "NUMBER", name: $rootScope.msg['st.number']},
-                {type: "SHORT_ANSWER", name: $rootScope.msg['st.shortAnswer']}];
-
             $scope.getAllTests();
-
-            $scope.questionAnswers = [];
-
 
             $scope.addRadioQ = function () {
                 QuestionAnswerSrv.show("ONE_ANSWER", $scope.questionFunction);
@@ -56,12 +59,25 @@ angular.module('stApp.test', [])
                 $scope.questionAnswers.splice($index, 1);
             }
 
-            $scope.saveTest = function () {
-                $scope.test.questions = [];
-
-                for (var i = 0; i < $scope.questionAnswers.length; i++) {
-                    $scope.test.questions.push($scope.questionAnswers[i][0].question);
+            $scope.setCorrectAnswer = function (question, answer) {
+                $scope.correctAnswer = {
+                    question: question,
+                    answer: answer
                 }
+
+                $scope.correctAnswers.push($scope.correctAnswer);
+            }
+
+            $scope.setAnswer = function (question) {
+                QuestionPreviewSrv.show(question);
+            }
+
+            $scope.saveTest = function () {
+
+                for (var i = 0; i < $scope.questionAnswers.question.length; i++) {
+                    $scope.questions.push($scope.questionAnswers.question[i]);
+                }
+                $scope.test.questions = $scope.questionAnswers;
 
                 $scope.criteria = {
                     test: $scope.test,

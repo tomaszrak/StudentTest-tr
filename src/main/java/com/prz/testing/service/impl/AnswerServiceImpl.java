@@ -2,9 +2,8 @@ package com.prz.testing.service.impl;
 
 import com.prz.testing.controller.UserData;
 import com.prz.testing.criteria.AnswerCriteria;
-import com.prz.testing.domain.Answer;
-import com.prz.testing.domain.Question;
-import com.prz.testing.domain.User;
+import com.prz.testing.domain.*;
+import com.prz.testing.dto.QuestionCAnswer;
 import com.prz.testing.repository.AnswerRepository;
 import com.prz.testing.repository.QuestionRepository;
 import com.prz.testing.repository.UserRepository;
@@ -15,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ROLO on 23.11.2015.
@@ -54,23 +55,29 @@ public class AnswerServiceImpl implements AnswerService {
         answer.setCreator(userRepository.getByIndexNumber(userData.getIndexNumber()));
     }
 
-    public List<Answer> saveAnswersQuestion(AnswerCriteria criteria) throws SQLException {
+    public QuestionCAnswer saveAnswersQuestion(AnswerCriteria criteria) throws SQLException {
 
         User creator = userRepository.getByIndexNumber(userData.getIndexNumber());
-        Question question = criteria.getQuestion();
-        question.setCreateDate(new Date());
-        question.setCreator(creator);
-        questionRepository.save(question);
 
-        logger.info("question id = " + question.getId());
-
-        List<Answer> answers = criteria.getAnswers();
+        Set<Answer> answers = criteria.getAnswers();
         for (Answer answer : answers) {
             answer.setCreateDate(new Date());
             answer.setCreator(creator);
-            answer.setQuestion(question);
+//            answer.setQuestion(question);
             answerRepository.save(answer);
         }
-        return answers;
+        Question question = criteria.getQuestion();
+        question.setCreateDate(new Date());
+        question.setCreator(creator);
+        question.setAnswers(answers);
+        questionRepository.save(question);
+
+        List<CorrectAnswer> cAnswers = questionRepository.getCAnswerByQuestion(question.getId());
+
+        return new QuestionCAnswer(question, cAnswers);
+    }
+
+    public void saveAnswer(QuestionAnswer answer) throws SQLException {
+        answerRepository.saveAnswer(answer);
     }
 }

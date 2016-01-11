@@ -1,9 +1,8 @@
 package com.prz.testing.controller;
 
 import com.prz.testing.criteria.TestCriteria;
-import com.prz.testing.domain.Answer;
+import com.prz.testing.domain.QuestionAnswer;
 import com.prz.testing.domain.Test;
-import com.prz.testing.dto.TestQA;
 import com.prz.testing.service.TestService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.ws.Response;
 import java.util.List;
 
 /**
@@ -57,14 +55,24 @@ public class TestController {
     }
 
     @RequestMapping(value = "/toSolve", method = RequestMethod.POST)
-    public ResponseEntity<TestQA> getTest(@RequestBody Long userId){
+    public ResponseEntity<Test> getTest(@RequestBody Long userId){
         try{
-            TestQA test = testService.getTest(userId);
-            return new ResponseEntity<TestQA>(test, HttpStatus.OK);
+            Test test = testService.getTest(userId);
+            return new ResponseEntity<Test>(test, HttpStatus.OK);
         } catch (Exception e){
             logger.error("Exception occurred during invocation of getTest()", e);
-            return new ResponseEntity<TestQA>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Test>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
+    @RequestMapping(value = "/resolved", method = RequestMethod.POST)
+    public ResponseEntity<Void> solveTest(@RequestBody List<QuestionAnswer> answers){
+        try {
+            testService.solveTest(answers);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }catch (Exception e){
+            logger.error("Exception occurred during invocation of solveTest()", e);
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

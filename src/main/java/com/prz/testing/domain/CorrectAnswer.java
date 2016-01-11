@@ -14,8 +14,9 @@ public class CorrectAnswer {
     @SequenceGenerator(name = "correctAnswerId", sequenceName = "CORRECT_ANSWER_ID_SEQ")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ANSWER_ID", referencedColumnName = "ID")
+    private Answer answer;
 
     @Column(name = "CREATE_DATE")
     private Date createDate;
@@ -36,12 +37,12 @@ public class CorrectAnswer {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Answer getAnswer() {
+        return answer;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 
     public Date getCreateDate() {

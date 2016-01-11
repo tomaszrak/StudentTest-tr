@@ -1,6 +1,7 @@
 package com.prz.testing.controller;
 
 import com.prz.testing.criteria.Criteria;
+import com.prz.testing.domain.CorrectAnswer;
 import com.prz.testing.domain.Question;
 import com.prz.testing.dto.PaginationData;
 import com.prz.testing.service.QuestionService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Roman on 15.10.2015.
@@ -48,8 +50,36 @@ public class QuestionController extends PaginationController<Question> {
     }
 
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
-    public ResponseEntity<List<Question>> getAll() throws SQLException {
-        List<Question> questions = questionService.getAll();
-        return new ResponseEntity<List<Question>>(questions, HttpStatus.OK);
+    public ResponseEntity<Set<Question>> getAll() throws SQLException {
+        try {
+            Set<Question> questions = questionService.getAll();
+            return new ResponseEntity<Set<Question>>(questions, HttpStatus.OK);
+        }catch(Exception e){
+            logger.error("Exception in  getAll()", e);
+            return new ResponseEntity<Set<Question>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/byId", method = RequestMethod.POST)
+    public ResponseEntity<Question> getById(@RequestBody Long questionId){
+        try{
+            Question question = questionService.getById(questionId);
+            return new ResponseEntity<Question>(question, HttpStatus.OK);
+        }catch (Exception e){
+            logger.error("Exception occurred during invocation of getById()", e);
+            return new ResponseEntity<Question>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/correctAnswer", method = RequestMethod.POST)
+    public ResponseEntity<Void> setCorrectAnswer(@RequestBody List<CorrectAnswer> answers){
+        try{
+            questionService.setCorrectAnswer(answers);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }catch(Exception e){
+            logger.error("Exception in setCorrectAnswer()", e);
+            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

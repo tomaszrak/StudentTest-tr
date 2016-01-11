@@ -14,9 +14,9 @@ public class Answer {
     @SequenceGenerator(name = "answerId", sequenceName = "ANSWER_ID_SEQ")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "QUESTION_ID")
-    private Question question;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "QUESTION_ID")
+//    private Question question;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -36,13 +36,13 @@ public class Answer {
         this.id = id;
     }
 
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
+//    public Question getQuestion() {
+//        return question;
+//    }
+//
+//    public void setQuestion(Question question) {
+//        this.question = question;
+//    }
 
     public User getCreator() {
         return creator;

@@ -26,13 +26,13 @@ public class Test {
     @Column(name = "description")
     private String description;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "subject_id", referencedColumnName = "id")
 //    private Subject subject;
     @Column(name = "subject")
     private String subject;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -40,7 +40,7 @@ public class Test {
     @JoinTable(name = "TEST_QUESTION",
             joinColumns = @JoinColumn(name = "TEST_ID"),
             inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
-    private Set<Question> questions ;
+    private Set<Question> questions;
 
     public Set<Question> getQuestions() {
         return questions;

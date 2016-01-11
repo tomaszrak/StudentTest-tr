@@ -1,66 +1,45 @@
-<div ng-repeat="answer in test.answers">
-    <strong>{{answer.question.name}}</strong>
-    <p>{{answer.name}}</p>
-</div>
+<h3>{{test.name}}</h3>
 
 
-<div ng-repeat="question in test.questions">
+<div ng-repeat="question in questions">
     <div class="col-md-10">
         <div class="col-md-10">
-            <input type="text" class="form-control" ng-model="question.name"
-                   placeholder="{{$root.msg['st.questionName']}}">
+            <h4>{{question.name}}</h4>
         </div>
     </div>
     <br/>
 
     <div ng-show="question.type == 'ONE_ANSWER'">
         <div class="list-item">
-
-            <div class="col-md-11" ng-repeat="answer in test.answers">
+            <div class="col-md-11" ng-repeat="answer in question.answers">
                 <div class="col-md-1">
-                    <input type="radio"/>
+                    <input type="radio" ng-model="question.questionAnswer" ng-value="answer"/>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" ng-model="answer.name" class="form-control col-md-9"/>
-                </div>
-                <div class="col-md-1">
-                    <a href="" ng-click="removeAnswer($index)"><span class="glyphicon glyphicon-remove"
-                                                                     aria-hidden="true"
-                                                                     ng-hide="!answers.length"></span></a>
-                </div>
-                <div class="col-md-1">
-                    <a href="" ng-click="addAnswer(question)"><span class="glyphicon glyphicon-plus"
-                                                                    aria-hidden="true"></span></a>
+                    {{answer.name}}
                 </div>
             </div>
         </div>
         <br/>
     </div>
-    <div ng-show="questionType == 'MULTIPLE'">
+    <div ng-show="question.type == 'MULTIPLE'">
         <div class="list-item">
 
             <div class="col-md-11" ng-repeat="answer in answers">
                 <div class="col-md-1">
-                    <input type="checkbox"/>
+                    <input type="checkbox" ng-model="question.questionAnswer" ng-value="answer"/>
                 </div>
                 <div class="col-md-9">
-                    <input type="text" ng-model="answer.name" class="form-control col-md-9"/>
-                </div>
-                <div class="col-md-1">
-                    <a href="" ng-click="removeAnswer($index)"><span class="glyphicon glyphicon-remove"
-                                                                     aria-hidden="true"
-                                                                     ng-hide="!answers.length"></span></a>
-                </div>
-                <div class="col-md-1">
-                    <a href="" ng-click="addAnswer(question)"><span class="glyphicon glyphicon-plus"
-                                                                    aria-hidden="true"></span></a>
+                    {{answer.name}}
                 </div>
             </div>
         </div>
     </div>
-    <div ng-show="questionType == 'SHORT_ANSWER'">
-        <textarea type="text" class="form-control"/>
+    <div ng-show="question.type == 'SHORT_ANSWER'">
+        <textarea type="text" class="form-control" ng-model="question.questionAnswer"/>
     </div>
-    <div ng-show="questionType == 'NUMBER'">
-        <input type="number" class="form-control">
+    <div ng-show="question.type == 'NUMBER'">
+        <input type="number" class="form-control" ng-model="question.questionAnswer"/>
     </div>
+</div>
+    <div><button class="btn btn-default" type="submit" ng-click="submitTest()">{{$root.msg['st.submitTest']}}</button>

@@ -2,6 +2,7 @@ package com.prz.testing.repository.impl;
 
 import com.prz.testing.domain.Answer;
 import com.prz.testing.domain.Question;
+import com.prz.testing.domain.QuestionAnswer;
 import com.prz.testing.repository.AnswerRepository;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,9 @@ public class AnswerRepositoryImpl extends AbstractRepositoryImpl<Answer> impleme
         List<Answer> answers = getCurrentSession().createCriteria(Answer.class).createAlias("question", "q")
                 .add(Restrictions.eq("q.id", questionId)).list();
         return answers;
+    }
+
+    public void saveAnswer(QuestionAnswer answer) throws SQLException {
+        getCurrentSession().save(answer);
     }
 }

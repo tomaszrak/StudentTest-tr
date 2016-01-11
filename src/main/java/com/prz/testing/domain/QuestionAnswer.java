@@ -29,8 +29,19 @@ public class QuestionAnswer {
     @Column(name = "CREATE_DATE")
     private Date createDate;
 
-    @Column(name = "timeSpent")
+    @Column(name = "TIME_SPENT")
     private Double timeSpent;
+
+    @Column(name = "TEST_ID")
+    private Long testId;
+
+    public Long getTestId() {
+        return testId;
+    }
+
+    public void setTestId(Long testId) {
+        this.testId = testId;
+    }
 
     public Double getTimeSpent() {
         return timeSpent;

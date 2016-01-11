@@ -5,6 +5,7 @@ import com.prz.testing.domain.Question;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ROLO on 14.12.2015.
@@ -14,7 +15,7 @@ public class AnswerCriteria {
 
     private Question question;
 
-    private List<Answer> answers;
+    private Set<Answer> answers;
 
     public Question getQuestion() {
         return question;
@@ -24,11 +25,11 @@ public class AnswerCriteria {
         this.question = question;
     }
 
-    public List<Answer> getAnswers() {
+    public Set<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
     }
 }

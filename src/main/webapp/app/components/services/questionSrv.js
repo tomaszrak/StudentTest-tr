@@ -9,6 +9,12 @@ angular.module('stApp.questionSrv', [])
             },
             questions : function(questionCriteria){
                 return $http.get('../rest/question/questions', questionCriteria);
+            },
+            byId : function(id){
+                return $http.post('../rest/question/byId', id);
+            },
+            correctAnswers : function(answers){
+                return $http.post('../rest/question/correctAnswer', answers);
             }
         }
     })

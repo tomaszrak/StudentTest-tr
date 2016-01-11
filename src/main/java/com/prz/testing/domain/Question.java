@@ -3,10 +3,12 @@ package com.prz.testing.domain;
 import com.prz.testing.enumerate.QuestionType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import sun.font.EAttribute;
 
 import javax.persistence.*;
 import java.sql.Time;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Created by Roman on 28.09.2015.
@@ -17,7 +19,7 @@ public class Question {
     @Id
     @GeneratedValue(generator = "questionId", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "questionId", sequenceName = "QUESTION_ID_SEQ")
-    private Long id;cm
+    private Long id;
 
     @Column(name = "TYPE")
     private QuestionType type;
@@ -34,6 +36,19 @@ public class Question {
 
     @Column(name = "time")
     private Double timeForAnswer;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "ANSWERS_FOR_QUESTION", joinColumns = @JoinColumn(name = "QUESTION_ID"),
+    inverseJoinColumns = @JoinColumn(name = "ANSWER_ID"))
+    private Set<Answer> answers;
+
+    public Set<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
 
     public Double getTimeForAnswer() {
         return timeForAnswer;
