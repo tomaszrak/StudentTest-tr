@@ -1,6 +1,7 @@
-<h3>{{test.name}}</h3>
-
-<div ng-show="questions.length">
+<div class="modal-header">
+    <h1>HEADER</h1>
+</div>
+<div class="modal-body">
     <div ng-repeat="question in questions">
         <div class="col-md-10">
             <div class="col-md-10">
@@ -27,7 +28,7 @@
 
                 <div class="col-md-11" ng-repeat="answer in question.answers">
                     <div class="col-md-1">
-                        <input type="checkbox" ng-model="answer.marked" ng-value="answer"/>
+                        <input type="checkbox" ng-model="question.questionAnswer" ng-value="answer"/>
                     </div>
                     <div class="col-md-9">
                         {{answer.name}}
@@ -36,16 +37,13 @@
             </div>
         </div>
         <div ng-show="question.type == 'SHORT_ANSWER'">
-            <textarea class="form-control" ng-model="question.questionAnswer"/>
+            <textarea type="text" class="form-control" ng-model="question.questionAnswer"/>
         </div>
         <div ng-show="question.type == 'NUMBER'">
-            <input class="form-control" ng-model="question.questionAnswer"/>
+            <input type="number" class="form-control" ng-model="question.questionAnswer"/>
         </div>
     </div>
-    <div>
-        <button class="btn btn-default" type="submit" ng-click="submitTest()">{{$root.msg['st.submitTest']}}</button>
-    </div>
 </div>
-<div ng-show="!questions.length">
-    <h3>No assigned tests</h3>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="cancel()">{{$root.msg['st.cancel']}}</button>
 </div>

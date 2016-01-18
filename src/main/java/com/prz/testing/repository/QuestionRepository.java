@@ -18,7 +18,7 @@ public interface QuestionRepository extends AbstractRepository<Question>{
 
     void setCorrectAnswer(CorrectAnswer correctAnswer) throws SQLException;
 
-    List<CorrectAnswer> getCorrectAnswersForQuestions(List<Long> questionIds) throws SQLException;
+    List<CorrectAnswer> getCorrectAnswersForQuestions(Set<Long> questionIds) throws SQLException;
 
     List<CorrectAnswer> getCAnswerByQuestion(Long questionId) throws SQLException;
 }

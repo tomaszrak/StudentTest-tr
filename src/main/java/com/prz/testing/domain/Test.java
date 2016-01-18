@@ -36,7 +36,7 @@ public class Test {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinTable(name = "TEST_QUESTION",
             joinColumns = @JoinColumn(name = "TEST_ID"),
             inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))

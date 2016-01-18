@@ -21,9 +21,8 @@ public class Summary {
     @Column(name = "DEGREE")
     private String degree;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID", name = "TEST_ID")
-    private Test test;
+    @Column(name = "TEST_ID")
+    private Long test;
 
     @Column(name = "CREATE_DATE")
     private Date createDate;
@@ -52,11 +51,11 @@ public class Summary {
         this.degree = degree;
     }
 
-    public Test getTest() {
+    public Long getTest() {
         return test;
     }
 
-    public void setTest(Test test) {
+    public void setTest(Long test) {
         this.test = test;
     }
 

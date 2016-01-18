@@ -2,6 +2,7 @@ package com.prz.testing.service;
 
 import com.prz.testing.criteria.TestCriteria;
 import com.prz.testing.domain.QuestionAnswer;
+import com.prz.testing.domain.Summary;
 import com.prz.testing.domain.Test;
 
 import java.sql.SQLException;
@@ -17,5 +18,5 @@ public interface TestService {
 
     Test getTest(Long id) throws SQLException;
 
-    void solveTest(List<QuestionAnswer> answers) throws SQLException;
+    Summary solveTest(List<QuestionAnswer> answers) throws SQLException;
 }

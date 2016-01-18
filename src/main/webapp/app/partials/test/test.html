@@ -23,13 +23,15 @@
         <br/>
 
         <div class="form-group has-feedback">
-            <input type="text" class="form-control" placeholder="{{$root.msg['st.search']}}"/>
+            <input type="text" class="form-control" ng-model="testSearch" placeholder="{{$root.msg['st.search']}}"/>
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
 
         <div class="list">
-            <div ng-repeat="test in tests">
-                <p>{{test.name}}</p>
+            <div ng-repeat="test in tests | filter : testSearch" ng-click="showTest(test)">
+                <div class="col-md-10">{{test.name}}</div>
+                <div class="col-md-1"><span class="glyphicon glyphicon-eye-open"></span></div>
+                <hr>
             </div>
         </div>
     </div>
@@ -78,25 +80,27 @@
                             <div class="col-md-1">
                                 <input type="checkbox" ng-model="question.question.correctAnswer" ng-value="answer"/>
                             </div>
-                            <div class="col-md-9">
-                                {{answer.name}}
-                            </div>
+                            {{answer.name}}
                         </div>
                     </div>
-                    <br/>
                 </div>
-                <div ng-show="question.question.type == 'SHORT_ANSWER'"><input type="text" class="form-control"/>
-                </div>
-                <div ng-show="question.question.type == 'NUMBER'"><input type="number" class="form-control"></div>
-                <br />
-                <div>
-                    <button class="btn btn-default" ng-click="removeQuestion($index)">{{$root.msg['st.remove']}}</button>
-                    <button class="btn btn-defaulr" ng-click="setAnswer(question)">{{$root.msg['st.setAnswer']}}</button>
-                </div>
-                <hr>
-            </div>
-            <button ng-click="saveTest()" type="submit" class="btn btn-primary">{{$root.msg['st.save']}}</button>
-        </div>
+                <br/>
 
+                <div>
+                    <button class="btn btn-default" ng-click="removeQuestion($index)">{{$root.msg['st.remove']}}
+                    </button>
+                    <button class="btn btn-default" ng-click="setAnswer(question)">{{$root.msg['st.setAnswer']}}
+                    </button>
+                </div>
+            </div>
+            <div ng-show="question.question.type == 'SHORT_ANSWER'"><input type="text" class="form-control"/>
+            </div>
+            <div ng-show="question.question.type == 'NUMBER'"><input type="number" class="form-control"></div>
+            <br/>
+            <hr>
+        </div>
+        <button ng-click="saveTest()" type="submit" class="btn btn-primary">{{$root.msg['st.save']}}</button>
     </div>
+
+</div>
 </div>

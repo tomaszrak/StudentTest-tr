@@ -11,7 +11,7 @@
 <body ng-controller="IndexCtrl" ng-cloak>
 <div>
     <div class="alert-container">
-        <alert class="alert-frame" ng-repeat="alert in alerts"
+        <alert class="alert-frame" ng-repeat="alert in alertList"
                type="{{alert.type}}" close="alertService.closeAlert($index)">{{alert.msg}}
         </alert>
     </div>
@@ -62,6 +62,7 @@
 <script src="app/components/modal/questionAnswerModal.js"></script>
 <script src="app/components/modal/userGroupModal.js"></script>
 <script src="app/components/modal/testAssigningModal.js"></script>
+<script src="app/components/modal/testPreview.js"></script>
 
 <script src="app/components/filter/modules.js"></script>
 <script src="app/components/filter/questionType.js"></script>

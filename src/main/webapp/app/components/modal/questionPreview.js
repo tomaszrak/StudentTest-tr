@@ -1,7 +1,7 @@
 angular.module('stApp.questionPreview', [])
     .service('QuestionPreviewSrv', function ($modal) {
         return {
-            show: function (question) {
+            show: function (question, edit) {
                 return $modal.open({
                         animation: true,
                         templateUrl: 'app/components/modal/questionPreview.html',
@@ -9,10 +9,15 @@ angular.module('stApp.questionPreview', [])
                         resolve: {
                             question: function () {
                                 return question
+                            },
+                            edit : function(){
+                                return edit;
                             }
                         },
-                        controller: function ($scope, QuestionSrv, $rootScope, $modalInstance, question, alert) {
+                        controller: function ($scope, QuestionSrv, $rootScope, $modalInstance, question, alert, edit) {
                             $scope.question = question;
+
+                            $scope.edit = edit;
 
                             $scope.correctAnswers = [];
 
@@ -58,7 +63,8 @@ angular.module('stApp.questionPreview', [])
                                 }
                                 QuestionSrv.correctAnswers($scope.correctAnswers)
                                     .success(function () {
-
+                                        $scope.close();
+                                        alert.add("Answer added", 'success', 4000);
                                     }).error(function () {
                                         alert.add("ERROR", "danger", 6000);
                                     })

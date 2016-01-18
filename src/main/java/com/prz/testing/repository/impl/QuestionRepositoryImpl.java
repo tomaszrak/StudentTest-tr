@@ -40,7 +40,7 @@ public class QuestionRepositoryImpl extends AbstractRepositoryImpl<Question> imp
         getCurrentSession().save(correctAnswer);
     }
 
-    public List<CorrectAnswer> getCorrectAnswersForQuestions(List<Long> questionIds) throws SQLException {
+    public List<CorrectAnswer> getCorrectAnswersForQuestions(Set<Long> questionIds) throws SQLException {
         List<CorrectAnswer> answers = getCurrentSession().createCriteria(CorrectAnswer.class)
                 .createAlias("question", "question").add(Restrictions.in("question.id", questionIds)).list();
         return answers;

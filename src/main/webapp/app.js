@@ -16,7 +16,14 @@ angular.module('stApp', ['ngRoute',
 
     }])
 
-    .controller('IndexCtrl', function ($scope, $http, $window) {
+    .controller('IndexCtrl', function ($scope, $http, $window, alert) {
+
+        $scope.alertList = alert.alerts;
+
+        $scope.closeAlert = function (index) {
+            alert.closeAlert(index);
+        };
+
         $scope.testData = "data";
 
         $scope.logout = function(){

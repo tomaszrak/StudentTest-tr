@@ -2,6 +2,7 @@ package com.prz.testing.controller;
 
 import com.prz.testing.criteria.TestCriteria;
 import com.prz.testing.domain.QuestionAnswer;
+import com.prz.testing.domain.Summary;
 import com.prz.testing.domain.Test;
 import com.prz.testing.service.TestService;
 import org.apache.log4j.Logger;
@@ -66,13 +67,13 @@ public class TestController {
     }
 
     @RequestMapping(value = "/resolved", method = RequestMethod.POST)
-    public ResponseEntity<Void> solveTest(@RequestBody List<QuestionAnswer> answers){
+    public ResponseEntity<Summary> solveTest(@RequestBody List<QuestionAnswer> answers){
         try {
-            testService.solveTest(answers);
-            return new ResponseEntity<Void>(HttpStatus.OK);
+            Summary summary = testService.solveTest(answers);
+            return new ResponseEntity<Summary>(summary, HttpStatus.OK);
         }catch (Exception e){
             logger.error("Exception occurred during invocation of solveTest()", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Summary>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

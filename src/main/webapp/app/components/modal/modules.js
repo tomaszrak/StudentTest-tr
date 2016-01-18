@@ -6,5 +6,6 @@ angular.module('stApp.modals', [
     'stApp.questionPreview',
     'stApp.questionAnswer',
     'stApp.userGroupEdit',
-    'stApp.testAssign'
+    'stApp.testAssign',
+    'stApp.testPreview'
 ])

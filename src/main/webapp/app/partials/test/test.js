@@ -5,8 +5,9 @@ angular.module('stApp.test', [])
             controller: 'TestCtrl'
         })
     }])
-    .controller('TestCtrl', ['$scope', '$rootScope', 'TestSrv', 'alert', 'QuestionAnswerSrv', 'QuestionPreviewSrv',
-        function ($scope, $rootScope, TestSrv, alert, QuestionAnswerSrv, QuestionPreviewSrv) {
+    .controller('TestCtrl', ['$scope', '$rootScope', 'TestSrv', 'alert', 'QuestionAnswerSrv',
+        'QuestionPreviewSrv', 'TestPreviewSrv', 'QuestionSrv',
+        function ($scope, $rootScope, TestSrv, alert, QuestionAnswerSrv, QuestionPreviewSrv, TestPreviewSrv, QuestionSrv) {
 
             $scope.test = {}
 
@@ -33,7 +34,21 @@ angular.module('stApp.test', [])
                     })
             }
 
+            $scope.getAllQuestions = function () {
+                QuestionSrv.questions({limit: 10, offset: 1})
+                    .success(function (result) {
+                        $scope.allQuestions = result;
+                    });
+            }
+
+
+            $scope.importQuestions = function () {
+
+            }
+
             $scope.getAllTests();
+
+            $scope.getAllQuestions();
 
             $scope.addRadioQ = function () {
                 QuestionAnswerSrv.show("ONE_ANSWER", $scope.questionFunction);
@@ -69,23 +84,36 @@ angular.module('stApp.test', [])
             }
 
             $scope.setAnswer = function (question) {
-                QuestionPreviewSrv.show(question);
+                    QuestionPreviewSrv.show(question, true);
             }
 
             $scope.saveTest = function () {
 
-                for (var i = 0; i < $scope.questionAnswers.question.length; i++) {
-                    $scope.questions.push($scope.questionAnswers.question[i]);
+                for (var i = 0; i < $scope.questionAnswers.length; i++) {
+                    $scope.questionAnswers[i].question.correctAnswer = undefined;
+                    $scope.questions.push($scope.questionAnswers[i].question);
                 }
-                $scope.test.questions = $scope.questionAnswers;
+                $scope.test.questions = $scope.questions;
 
                 $scope.criteria = {
                     test: $scope.test,
                     answers: $scope.answers
                 }
-                TestSrv.test($scope.criteria).success(function () {
+                TestSrv.test($scope.criteria)
+                    .success(function () {
+                        alert.add("Test was saved", 'success', 4000);
+                        $scope.test = {};
+                        $scope.questionAnswers = [];
+                        $scope.correctAnswers = [];
+                        $scope.questions = [];
+                        $scope.getAllTests();
+                    }).error(function () {
+                        alert.add("Error", 'danger', 6000);
+                    })
+            }
 
-                })
+            $scope.showTest = function (test) {
+                TestPreviewSrv.show(test);
             }
 
         }])

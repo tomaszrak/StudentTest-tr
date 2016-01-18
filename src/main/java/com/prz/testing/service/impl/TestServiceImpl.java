@@ -3,21 +3,19 @@ package com.prz.testing.service.impl;
 import com.prz.testing.controller.UserData;
 import com.prz.testing.criteria.TestCriteria;
 import com.prz.testing.domain.*;
-import com.prz.testing.repository.QuestionRepository;
-import com.prz.testing.repository.TestRepository;
-import com.prz.testing.repository.UserGroupRepository;
-import com.prz.testing.repository.UserRepository;
+import com.prz.testing.enumerate.QuestionType;
+import com.prz.testing.repository.*;
 import com.prz.testing.service.AnswerService;
 import com.prz.testing.service.QuestionService;
 import com.prz.testing.service.TestService;
+import com.sun.javafx.binding.StringFormatter;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ROLO on 07.12.2015.
@@ -44,6 +42,10 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private UserGroupRepository userGroupRepository;
 
+    @Autowired
+    private SummaryRepository summaryRepository;
+
+    private Logger logger = Logger.getLogger(TestServiceImpl.class);
 
     public List<Test> getTestsByUser(Long id) throws SQLException {
         return testRepository.getTestsByUser(id);
@@ -63,43 +65,60 @@ public class TestServiceImpl implements TestService {
         return test;
     }
 
-    public void solveTest(List<QuestionAnswer> answers) throws SQLException {
+    public Summary solveTest(List<QuestionAnswer> answers) throws SQLException {
         for (QuestionAnswer answer : answers) {
+            if (answer.getQuestion().getType().equals(QuestionType.NUMBER)
+                    || answer.getQuestion().getType().equals(QuestionType.SHORT_ANSWER)) {
+                answerService.saveAnswer(answer.getAnswer());
+            }
+
             answer.setCreateDate(new Date());
             answerService.saveAnswer(answer);
         }
 
-        createSummary(answers);
+        return createSummary(answers);
     }
 
-    public void createSummary(List<QuestionAnswer> answers) throws SQLException {
-        List<Long> ids = new ArrayList<Long>();
-        List<Question> questions = new ArrayList<Question>();
+    public Summary createSummary(List<QuestionAnswer> answers) throws SQLException {
+        Set<Long> ids = new HashSet<Long>();
 
         int correctAnswersNumber = 0;
 
         for (QuestionAnswer answer : answers) {
             Question question = answer.getQuestion();
             ids.add(question.getId());
-            questions.add(question);
         }
 
 
         List<CorrectAnswer> correctAnswers = getCorrectAnswersForQuestions(ids);
 
         for (QuestionAnswer answer : answers) {
-            for(CorrectAnswer cAnswer : correctAnswers){
-                if (answer.getAnswer() == cAnswer.getAnswer()){
-                    ++correctAnswersNumber;
-                    break;
-                } else{
-                    continue;
+            for (CorrectAnswer cAnswer : correctAnswers) {
+                if (null != answer.getAnswer().getId()) {
+                    logger.info(answer.getAnswer().getId() + " " + cAnswer.getAnswer().getId());
+                    if (answer.getAnswer().getId() == cAnswer.getAnswer().getId()) {
+                        ++correctAnswersNumber;
+                        break;
+                    }
                 }
             }
         }
+        User student = answers.get(0).getUser();
+
+        Summary summary = new Summary();
+        summary.setCreateDate(new Date());
+        summary.setStudent(student);
+        summary.setTest(answers.get(0).getTestId());
+        summary.setDegree("" + 100 * correctAnswersNumber / ids.size());
+
+        logger.info(String.format("Correct answers [%d] for userId = [%d]", correctAnswersNumber, student.getId()));
+
+        summaryRepository.save(summary);
+
+        return summary;
     }
 
-    public List<CorrectAnswer> getCorrectAnswersForQuestions(List<Long> ids) throws SQLException {
+    public List<CorrectAnswer> getCorrectAnswersForQuestions(Set<Long> ids) throws SQLException {
         return questionRepository.getCorrectAnswersForQuestions(ids);
     }
 
