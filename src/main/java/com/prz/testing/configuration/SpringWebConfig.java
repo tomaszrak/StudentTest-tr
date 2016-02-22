@@ -1,5 +1,7 @@
 package com.prz.testing.configuration;
 
+import com.prz.testing.handler.RequestInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,10 +14,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.spring3.view.ThymeleafViewResolver;
@@ -32,6 +31,9 @@ import java.util.List;
 @ComponentScan(basePackages = "com.prz.testing")
 @EnableTransactionManagement
 public class SpringWebConfig extends WebMvcConfigurerAdapter {
+
+    @Autowired
+    private RequestInterceptor requestInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -94,6 +96,10 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
     public HttpMessageConverter<Object> getJsonMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         return converter;
+    }
+
+    public void addInterceptors(InterceptorRegistry registry){
+        registry.addInterceptor(requestInterceptor);
     }
 
   /*  @Bean

@@ -1,6 +1,7 @@
 package com.prz.testing.controller;
 
 import com.prz.testing.domain.UserGroup;
+import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.UserGroupService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,8 @@ public class UserGroupController {
         try {
             List<UserGroup> groups = userGroupService.getAllGroups();
             return new ResponseEntity<List<UserGroup>>(groups, HttpStatus.OK);
-        } catch (SQLException e) {
-            logger.error("Exception occured during invocation of getAll()", e);
-            return new ResponseEntity<List<UserGroup>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new InternalServerError(e);
         }
     }
 
@@ -42,9 +42,8 @@ public class UserGroupController {
         try {
             userGroupService.saveGroup(group);
             return new ResponseEntity<Void>(HttpStatus.OK);
-        } catch (SQLException e) {
-            logger.error("Exception occured during invocation of getAll()", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new InternalServerError(e);
         }
     }
 
@@ -54,8 +53,7 @@ public class UserGroupController {
             userGroupService.removeGroup(group);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (SQLException e) {
-            logger.error("Exception occured during invocation of removeGroup()", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerError(e);
         }
     }
 
@@ -65,8 +63,7 @@ public class UserGroupController {
             userGroupService.updateGroup(group);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (SQLException e){
-            logger.error("Exception occured during invocation of updateGroup()", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerError(e);
         }
     }
 

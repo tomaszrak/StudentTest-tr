@@ -5,6 +5,7 @@ import com.prz.testing.domain.CorrectAnswer;
 import com.prz.testing.domain.Question;
 import com.prz.testing.dto.PaginationData;
 import com.prz.testing.service.QuestionService;
+import com.prz.testing.util.LogUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,12 @@ public class QuestionController extends PaginationController<Question> {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private LogUtil log;
+
     @Override
     public PaginationData<Question> fetch(Criteria criteria) throws Exception {
+        log.info("fetch");
         List<Question> data = questionService.getWithCriteriaPaginatedQuestions(criteria);
         Integer totalItems = questionService.countWithCriteriaQuestions(criteria);
         return new PaginationData<Question>(totalItems, data);

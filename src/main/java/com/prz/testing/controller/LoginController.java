@@ -2,6 +2,7 @@ package com.prz.testing.controller;
 
 import com.prz.testing.domain.User;
 import com.prz.testing.service.UserService;
+import com.prz.testing.util.LogUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSourceResolvable;
@@ -47,6 +48,10 @@ public class LoginController {
 
     @Autowired
     private UserData userData;
+
+
+    @Autowired
+    private LogUtil log;
 
     @RequestMapping(value = "/student", method = RequestMethod.GET)
     public ResponseEntity<Void> studentTest(){
@@ -116,6 +121,7 @@ public class LoginController {
         userData.setId(user.getId());
         userData.setStatus(user.getStatus());
         userData.setIndexNumber(user.getIndexNumber());
+        log.info("LAST NAME");
         logger.info("LAST NAME is " + userData.getLastName());
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
