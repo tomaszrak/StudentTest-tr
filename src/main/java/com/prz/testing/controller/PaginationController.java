@@ -2,13 +2,13 @@ package com.prz.testing.controller;
 
 import com.prz.testing.criteria.Criteria;
 import com.prz.testing.dto.PaginationData;
-import org.apache.log4j.Logger;
+import com.prz.testing.exception.InternalServerError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by Roman on 15.10.2015.
@@ -16,16 +16,13 @@ import java.util.List;
 @RestController
 public abstract class PaginationController<T> {
 
-    private Logger logger = Logger.getLogger(PaginationController.class);
-
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<PaginationData<T>> paginateData(@RequestBody Criteria criteria){
         PaginationData<T> data;
         try {
             data = fetch(criteria);
         }catch (Exception e){
-            logger.error("Exception occured during invocation of fetch()", e);
-            return new ResponseEntity<PaginationData<T>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerError(e);
         }
 
         return new ResponseEntity<PaginationData<T>>(data, HttpStatus.OK);

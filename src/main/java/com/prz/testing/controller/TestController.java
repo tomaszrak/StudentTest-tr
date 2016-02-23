@@ -4,8 +4,8 @@ import com.prz.testing.criteria.TestCriteria;
 import com.prz.testing.domain.QuestionAnswer;
 import com.prz.testing.domain.Summary;
 import com.prz.testing.domain.Test;
+import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.TestService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,51 +29,44 @@ public class TestController {
     @Autowired
     private UserData userData;
 
-    private Logger logger = Logger.getLogger(TestController.class);
-
-    @RequestMapping(value="/tests", method = RequestMethod.GET)
-    public ResponseEntity<List<Test>> getAllTests(){
+    @RequestMapping(value = "/tests", method = RequestMethod.GET)
+    public ResponseEntity<List<Test>> getAllTests() {
 
         try {
             List<Test> tests = testService.getTestsByUser(userData.getId());
             return new ResponseEntity<List<Test>>(tests, HttpStatus.OK);
-        } catch (Exception e){
-            logger.error("Exception occured during invocation of getAllTests()", e);
-            return new ResponseEntity<List<Test>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new InternalServerError(e);
         }
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<Void> saveTest(@RequestBody TestCriteria criteria){
+    public ResponseEntity<Void> saveTest(@RequestBody TestCriteria criteria) {
         try {
             testService.saveTest(criteria);
             return new ResponseEntity<Void>(HttpStatus.OK);
-        }catch (Exception e){
-            logger.error("Exception occurred during invocation of saveTest()", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new InternalServerError(e);
         }
-
     }
 
     @RequestMapping(value = "/toSolve", method = RequestMethod.POST)
-    public ResponseEntity<Test> getTest(@RequestBody Long userId){
-        try{
+    public ResponseEntity<Test> getTest(@RequestBody Long userId) {
+        try {
             Test test = testService.getTest(userId);
             return new ResponseEntity<Test>(test, HttpStatus.OK);
-        } catch (Exception e){
-            logger.error("Exception occurred during invocation of getTest()", e);
-            return new ResponseEntity<Test>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new InternalServerError(e);
         }
     }
 
     @RequestMapping(value = "/resolved", method = RequestMethod.POST)
-    public ResponseEntity<Summary> solveTest(@RequestBody List<QuestionAnswer> answers){
+    public ResponseEntity<Summary> solveTest(@RequestBody List<QuestionAnswer> answers) {
         try {
             Summary summary = testService.solveTest(answers);
             return new ResponseEntity<Summary>(summary, HttpStatus.OK);
-        }catch (Exception e){
-            logger.error("Exception occurred during invocation of solveTest()", e);
-            return new ResponseEntity<Summary>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            throw new InternalServerError(e);
         }
     }
 }

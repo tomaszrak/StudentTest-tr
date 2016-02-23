@@ -1,9 +1,7 @@
 package com.prz.testing.handler;
 
-import com.prz.testing.controller.UserData;
 import com.prz.testing.util.LogUtil;
 import com.prz.testing.util.RequestWrapper;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -21,15 +19,12 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private LogUtil log;
 
-    Logger logger = Logger.getLogger(RequestInterceptor.class);
-
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         StringBuilder sb = new StringBuilder();
         try {
             RequestWrapper requestWrapper = new RequestWrapper(request);
             String method = requestWrapper.getMethod();
             Map<String, String[]> parameters = requestWrapper.getParameterMap();
-//        sb.append(userData.getId());
             sb.append(";HTTP-");
             sb.append(method.toUpperCase());
             sb.append(";" + requestWrapper.getRemoteHost() + ":" + requestWrapper.getRemotePort());
@@ -45,8 +40,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
             }
             log.info(null != sb ? sb.toString() : "");
         } catch (Exception e) {
-            logger.error(e);
-            e.printStackTrace();
+            log.error(e);
         }
         return super.preHandle(request, response, handler);
     }

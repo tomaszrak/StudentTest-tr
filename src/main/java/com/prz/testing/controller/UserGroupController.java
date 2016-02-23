@@ -3,7 +3,6 @@ package com.prz.testing.controller;
 import com.prz.testing.domain.UserGroup;
 import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.UserGroupService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +23,6 @@ public class UserGroupController {
 
     @Autowired
     private UserGroupService userGroupService;
-
-    private Logger logger = Logger.getLogger(UserGroupController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<List<UserGroup>> getAll() {

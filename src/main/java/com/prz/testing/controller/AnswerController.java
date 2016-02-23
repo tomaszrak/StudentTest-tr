@@ -4,7 +4,9 @@ import com.prz.testing.criteria.AnswerCriteria;
 import com.prz.testing.domain.Answer;
 import com.prz.testing.domain.Question;
 import com.prz.testing.dto.QuestionCAnswer;
+import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.AnswerService;
+import com.prz.testing.util.LogUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,8 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
-    private Logger logger = Logger.getLogger(AnswerController.class);
+    @Autowired
+    private LogUtil logger;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ResponseEntity<Void> addAnswer(@RequestBody Answer answer) {
@@ -35,8 +38,7 @@ public class AnswerController {
             answerService.saveAnswer(answer);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Exception occured during invocation of addAnswer", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerError(e);
         }
     }
 
@@ -46,8 +48,7 @@ public class AnswerController {
             List<Answer> answers = answerService.getAllAnswersForQuestion(questionId);
             return new ResponseEntity<List<Answer>>(answers, HttpStatus.OK);
         } catch (SQLException e){
-            logger.error(e);
-            return new ResponseEntity<List<Answer>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new InternalServerError(e);
         }
     }
 
@@ -57,9 +58,7 @@ public class AnswerController {
             QuestionCAnswer question = answerService.saveAnswersQuestion(criteria);
             return  new ResponseEntity<QuestionCAnswer>(question, HttpStatus.OK);
         } catch (Exception e){
-            logger.error("Exception occurred during invocation of saveAnswerWithQuestion()", e);
-            return new ResponseEntity<QuestionCAnswer>(HttpStatus.INTERNAL_SERVER_ERROR);
-
+            throw new InternalServerError(e);
         }
     }
 }

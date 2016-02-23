@@ -124,4 +124,19 @@ public class UserData extends User implements Serializable{
     }
 
     private Role role;
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", createDate=" + createDate +
+                ", indexNumber='" + indexNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", role=" + role +
+                '}';
+    }
 }

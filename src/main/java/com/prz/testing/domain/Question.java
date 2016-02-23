@@ -1,12 +1,8 @@
 package com.prz.testing.domain;
 
 import com.prz.testing.enumerate.QuestionType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import sun.font.EAttribute;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 

@@ -19,6 +19,22 @@ public class LogUtil {
 
     public void info(String... params) {
         try {
+            logger.info(buildLog(params));
+        } catch (Exception e) {
+            logger.error(e);
+        }
+    }
+
+    public void error(Exception e, String... params) {
+        logger.error(buildLog(params), e);
+    }
+
+    public void error(String... params) {
+        logger.error(params);
+    }
+
+    public String buildLog(String... params) {
+        try {
             Long userId = userData.getId();
             StringBuilder sb = new StringBuilder(null != userId ? userId.toString() : "anonymous");
             sb.append(";");
@@ -30,9 +46,10 @@ public class LogUtil {
                 sb.append(";");
                 sb.append(p);
             }
-            logger.info(sb.toString());
+            return sb.toString();
         } catch (Exception e) {
             logger.error(e);
+            return null;
         }
     }
 }
