@@ -26,6 +26,7 @@ public class Subject {
     @JoinColumn(name = "TEACHER_ID", referencedColumnName = "ID")
     private User teacher;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CREATOR_ID", referencedColumnName = "ID")
     private User creator;

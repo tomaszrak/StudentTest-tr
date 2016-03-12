@@ -26,9 +26,6 @@ public class Test {
     @Column(name = "description")
     private String description;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "subject_id", referencedColumnName = "id")
-//    private Subject subject;
     @Column(name = "subject")
     private String subject;
 

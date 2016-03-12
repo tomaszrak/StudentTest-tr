@@ -14,7 +14,7 @@ public class Summary {
     @SequenceGenerator(name = "summaryId", sequenceName = "SUMMARY_ID_SEQ")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User student;
 

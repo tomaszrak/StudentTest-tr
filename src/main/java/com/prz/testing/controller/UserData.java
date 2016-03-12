@@ -34,16 +34,6 @@ public class UserData extends User implements Serializable{
     private Status status;
 
     @Override
-    public Role getRole() {
-        return role;
-    }
-
-    @Override
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @Override
     public Status getStatus() {
         return status;
     }
@@ -123,7 +113,15 @@ public class UserData extends User implements Serializable{
         this.id = id;
     }
 
-    private Role role;
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    private String roleName;
 
     @Override
     public String toString() {
@@ -136,7 +134,7 @@ public class UserData extends User implements Serializable{
                 ", indexNumber='" + indexNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", status=" + status +
-                ", role=" + role +
+                ", role=" + roleName +
                 '}';
     }
 }

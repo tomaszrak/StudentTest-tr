@@ -1,5 +1,7 @@
 package com.prz.testing.service;
 
+import com.prz.testing.domain.Summary;
+import com.prz.testing.domain.User;
 import com.prz.testing.domain.UserGroup;
 
 import java.sql.SQLException;
@@ -17,4 +19,6 @@ public interface UserGroupService {
     void updateGroup(UserGroup group) throws SQLException;
 
     void removeGroup(UserGroup group) throws SQLException;
+
+    List<Summary> getSummaryForGroup(Long id) throws SQLException;
 }

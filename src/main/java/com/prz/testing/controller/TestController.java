@@ -31,7 +31,6 @@ public class TestController {
 
     @RequestMapping(value = "/tests", method = RequestMethod.GET)
     public ResponseEntity<List<Test>> getAllTests() {
-
         try {
             List<Test> tests = testService.getTestsByUser(userData.getId());
             return new ResponseEntity<List<Test>>(tests, HttpStatus.OK);

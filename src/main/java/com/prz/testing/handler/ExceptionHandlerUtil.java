@@ -1,8 +1,8 @@
 package com.prz.testing.handler;
 
-import com.prz.testing.controller.UserData;
-import com.prz.testing.exception.InternalServerError;
+import com.prz.testing.util.LogUtil;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,17 +19,18 @@ public class ExceptionHandlerUtil {
 
     private Logger logger = Logger.getLogger(ExceptionHandlerUtil.class);
 
-    private UserData userData;
+    @Autowired
+    private LogUtil log;
 
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<Void> hadleSQLException(HttpServletRequest rq, Exception e) {
-        logger.error(String.format("userId=%d, url=%s", userData.getId(), rq.getRequestURL().toString()), e);
+        log.error(e, rq.getRequestURL().toString());
         return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(InternalServerError.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<Void> handleInternalException(HttpServletRequest rq, Exception e){
-        logger.error(String.format("userId=%d, url=%s", userData.getId(), rq.getRequestURL().toString()), e);
+        log.error(e, rq.getRequestURL().toString());
         return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -1,5 +1,6 @@
 package com.prz.testing.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prz.testing.handler.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -96,9 +97,9 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
         return converter;
     }
 
-    public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(requestInterceptor);
-    }
+//    public void addInterceptors(InterceptorRegistry registry){
+//        registry.addInterceptor(requestInterceptor);
+//    }
 
   /*  @Bean
     public void initLog4j() throws FileNotFoundException {

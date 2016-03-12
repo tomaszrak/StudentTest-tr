@@ -1,7 +1,9 @@
 package com.prz.testing.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.prz.testing.enumerate.RoleName;
 import com.prz.testing.enumerate.Status;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,7 +41,7 @@ public class User {
     @Column(name = "STATUS", nullable = false)
     private Status status;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
@@ -113,5 +115,20 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", createDate=" + createDate +
+                ", indexNumber='" + indexNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", role=" + role +
+                '}';
     }
 }

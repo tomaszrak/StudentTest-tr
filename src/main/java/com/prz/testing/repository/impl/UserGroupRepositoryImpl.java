@@ -1,8 +1,11 @@
 package com.prz.testing.repository.impl;
 
+import com.prz.testing.domain.User;
 import com.prz.testing.domain.UserGroup;
 import com.prz.testing.repository.UserGroupRepository;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
@@ -35,5 +38,11 @@ public class UserGroupRepositoryImpl extends AbstractRepositoryImpl<UserGroup> i
                 .createAlias("users", "users").add(Restrictions.eq("users.id", userId)).list().get(0);
 
         return userGroup;
+    }
+
+    public List<User> getGroupUsers(Long id) throws SQLException{
+        List<User> users = getCurrentSession().createCriteria(UserGroup.class).add(Restrictions.eq("id", id))
+                .setProjection(Projections.property("users")).list();
+        return users;
     }
 }

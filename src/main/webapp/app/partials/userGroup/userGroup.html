@@ -34,11 +34,24 @@
                             <li><a href="" ng-click="editGroup(group)">{{$root.msg['st.editGroup']}}</a></li>
                             <li><a href="" ng-click="assignTests(group)">{{$root.msg['st.assignTests']}}</a></li>
                             <li><a href="" ng-click="removeGroup(group)">{{$root.msg['st.removeGroup']}}</a></li>
+                            <li><a href="" ng-click="showResults(group)">{{$root.msg['st.groupResults']}}</a></li>
                         </ul>
                     </div>
                 </td>
             </tr>
         </table>
         <br>
+
+        <table class="table table-bordered table-stripped" ng-show="summary">
+            <tr>
+                <th>Students / Tests</th>
+                <th ng-repeat="t in header">{{t.name}} {{t.id}}</th>
+            </tr>
+            <tr ng-repeat="r in results">
+                <td>{{r.user.firstName}} {{s.user.lastName}}</td>
+                <td ng-repeat="d in r.degree track by $index">{{d.degree }}</td>
+            </tr>
+
+        </table>
     </div>
 </div>

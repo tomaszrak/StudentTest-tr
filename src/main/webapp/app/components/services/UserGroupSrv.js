@@ -12,6 +12,9 @@ angular.module('stApp.userGroupSrv', [])
             },
             userGroupToUpdate : function(group){
                 return $http.post("../rest/userGroup/userGroupToUpdate", group);
+            },
+            summary : function(id){
+                return $http.post('../rest/userGroup/summary', id);
             }
         }
 

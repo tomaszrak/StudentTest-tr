@@ -23,7 +23,7 @@ public class TestRepositoryImpl extends AbstractRepositoryImpl<Test> implements 
 
     public List<Test> getTestsByUser(Long id) throws SQLException{
         List<Test> tests = getCurrentSession().createCriteria(Test.class).createAlias("user", "u")
-                .add(Restrictions.eq("u.id", id)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+                .add(Restrictions.eq("u.id", id)).list();
         return tests;
 
     }

@@ -1,5 +1,6 @@
 package com.prz.testing.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.prz.testing.enumerate.QuestionType;
 
 import javax.persistence.*;

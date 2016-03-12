@@ -25,9 +25,9 @@ public class QuestionRepositoryImpl extends AbstractRepositoryImpl<Question> imp
     }
 
     public Set<Question> getAllQuestions() throws SQLException {
-        Set<Question> questions = new HashSet<Question>(getCurrentSession().createCriteria(Question.class)
-                .createAlias("creator", "user", JoinType.LEFT_OUTER_JOIN).list());
-        return questions;
+        List<Question> questions = getCurrentSession().createCriteria(Question.class).list();
+        questions.get(0);
+        return new HashSet<Question>(questions);
     }
 
     public Question getById(Long questionId) {

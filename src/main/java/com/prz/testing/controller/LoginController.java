@@ -1,5 +1,6 @@
 package com.prz.testing.controller;
 
+import com.prz.testing.domain.Role;
 import com.prz.testing.domain.User;
 import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.UserService;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by Roman on 25.08.2015.
@@ -68,13 +69,8 @@ public class LoginController {
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<User> getLoggedUser(){
-        User user = null; //SecurityContextHolder.getContext().getAuthentication().getName()
         try {
-            user = userService.getUserByIndex(SecurityContextHolder.getContext().getAuthentication().getName());
-        } catch (SQLException e) {
-            throw new InternalServerError(e);
-        }
-        try {
+            User user = userService.getUserByIndex(SecurityContextHolder.getContext().getAuthentication().getName());
             userData.setCreateDate(user.getCreateDate());
             userData.setRole(user.getRole());
             userData.setLastName(user.getLastName());
@@ -83,8 +79,10 @@ public class LoginController {
             userData.setId(user.getId());
             userData.setStatus(user.getStatus());
             userData.setIndexNumber(user.getIndexNumber());
+            userData.setRoleName(user.getRole().getName().toString());
             log.info("LAST NAME");
             logger.info("LAST NAME is " + userData.getLastName());
+
             return new ResponseEntity<User>(user, HttpStatus.OK);
         } catch (Exception e) {
             throw new InternalServerError(e);

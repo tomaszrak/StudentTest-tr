@@ -29,9 +29,7 @@ angular.module('stApp.testAssign', [])
                             TestSrv.tests()
                                 .success(function(result){
                                     $scope.tests = result;
-                                }).error(function(){
-                                    alert.add("Error", "danger", 6000);
-                                })
+                                });
                         }
                         $scope.getAllTests();
 

@@ -6,7 +6,10 @@ import com.prz.testing.domain.User;
 import com.prz.testing.enumerate.RoleName;
 import com.prz.testing.repository.UserRepository;
 import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +28,9 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<User> implements 
         super(User.class);
     }
 
-    public void test() {
-        getCurrentSession();
-    }
 
     public List<User> getAllUsers() throws SQLException {
-        List<User> users = new ArrayList<User>();
-        users = getCurrentSession().createCriteria(User.class).list();
+        List<User> users = getCurrentSession().createCriteria(User.class).list();
         return users;
     }
 
@@ -44,13 +43,15 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<User> implements 
     }
 
     public List<User> getByRoleName(RoleName roleName) throws SQLException {
-        List<User> users = new ArrayList<User>();
-        users = getCurrentSession().createCriteria(User.class).add(Restrictions.eq("roleName", roleName)).list();
+        List<User> users = getCurrentSession().createCriteria(User.class)
+               .createAlias("role", "role").add(Restrictions.eq("role.roleName", roleName)).list();
         return users;
     }
 
     public User getByIndexNumber(String indexNumber) throws SQLException {
-        return (User) getCurrentSession().createCriteria(User.class)
+        User user = (User) getCurrentSession().createCriteria(User.class)
                 .add(Restrictions.eq("indexNumber", indexNumber)).uniqueResult();
+
+        return user;
     }
 }

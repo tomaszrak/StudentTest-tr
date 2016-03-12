@@ -1,5 +1,6 @@
 package com.prz.testing.repository;
 
+import com.prz.testing.domain.User;
 import com.prz.testing.domain.UserGroup;
 
 import java.sql.SQLException;
@@ -13,4 +14,6 @@ public interface UserGroupRepository extends AbstractRepository<UserGroup>{
     List<UserGroup> getAllGroups() throws SQLException;
 
     UserGroup getUserGroupByUser(Long userId) throws SQLException;
+
+    List<User> getGroupUsers(Long id) throws SQLException;
 }

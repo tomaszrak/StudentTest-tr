@@ -1,7 +1,10 @@
 package com.prz.testing.service.impl;
 
 import com.prz.testing.controller.UserData;
+import com.prz.testing.domain.Summary;
+import com.prz.testing.domain.User;
 import com.prz.testing.domain.UserGroup;
+import com.prz.testing.repository.SummaryRepository;
 import com.prz.testing.repository.UserGroupRepository;
 import com.prz.testing.repository.UserRepository;
 import com.prz.testing.service.UserGroupService;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +27,9 @@ public class UserGroupServiceImpl implements UserGroupService{
 
     @Autowired
     private UserGroupRepository userGroupRepository;
+
+    @Autowired
+    private SummaryRepository summaryRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -48,5 +55,10 @@ public class UserGroupServiceImpl implements UserGroupService{
 
     public void removeGroup(UserGroup group) throws SQLException {
         userGroupRepository.delete(group);
+    }
+
+    public List<Summary> getSummaryForGroup(Long id) throws SQLException {
+        UserGroup userGroup = userGroupRepository.getById(id);
+        return summaryRepository.getByUsers(new ArrayList<User>(userGroup.getUsers()));
     }
 }

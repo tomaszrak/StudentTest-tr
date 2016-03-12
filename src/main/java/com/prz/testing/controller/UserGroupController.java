@@ -1,5 +1,7 @@
 package com.prz.testing.controller;
 
+import com.prz.testing.domain.Summary;
+import com.prz.testing.domain.User;
 import com.prz.testing.domain.UserGroup;
 import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.UserGroupService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,7 +57,7 @@ public class UserGroupController {
         }
     }
 
-    @RequestMapping(value = "userGroupToUpdate", method = RequestMethod.POST)
+    @RequestMapping(value = "/userGroupToUpdate", method = RequestMethod.POST)
     public ResponseEntity<Void> updateGroup(@RequestBody UserGroup group) {
         try {
             userGroupService.updateGroup(group);
@@ -64,4 +67,14 @@ public class UserGroupController {
         }
     }
 
+    @RequestMapping(value = "/summary", method = RequestMethod.POST)
+    public ResponseEntity<List<Summary>> getSummaryForUsers(@RequestBody Long userGroupId) {
+        try {
+            List<Summary> list = userGroupService.getSummaryForGroup(userGroupId);
+            return new ResponseEntity<List<Summary>>(list, HttpStatus.OK);
+        } catch (SQLException e){
+            e.printStackTrace();
+            throw new InternalServerError(e);
+        }
+    }
 }
