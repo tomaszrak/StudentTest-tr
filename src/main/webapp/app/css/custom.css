@@ -4,19 +4,19 @@
     padding: 25px;
 }
 
-#wrapper{
+#wrapper {
     min-height: 100%;
     position: relative;
 }
 
-#footer{
+#footer {
     margin-top: 10%;
     bottom: 0;
     position: absolute;
     width: 100%;
 }
 
-html, body{
+html, body {
     height: 100%;
 }
 
@@ -27,11 +27,11 @@ html, body{
 }
 
 .view {
-    overflow: hidden;
+    /*overflow: hidden;*/
     margin-left: -2px;
-    margin-top:5%;
-    margin-left:15%;
-    margin-right:15%;
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15%;
     margin-bottom: 5%;
 }
 
@@ -40,30 +40,29 @@ html, body{
     margin-left: auto;
     margin-right: auto;
 
-
 }
 
-.left-menu{
+.left-menu {
     width: 30%;
 }
 
-.data{
+.data {
     width: 100%;
     display: inline;
 }
 
-.titleInput{
+.titleInput {
     height: 70px;
     font-size: 19pt;
 }
 
-.list-items{
+.list-items {
     display: inline-block;
     background-color: #e8e8e8;
     padding-bottom: 10px;
 }
 
-.list-item{
+.list-item {
     display: inline-block;
     padding-bottom: 7px;
 }
@@ -96,4 +95,12 @@ html, body{
 
 .groupModal {
     overflow: auto;
+}
+
+.has-error {
+    border-color: red;
+}
+
+.ng-invalid.ng-touched {
+    border-color: red;
 }

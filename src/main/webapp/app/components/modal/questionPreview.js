@@ -1,8 +1,8 @@
 angular.module('stApp.questionPreview', [])
-    .service('QuestionPreviewSrv', function ($modal) {
+    .service('QuestionPreviewSrv', function ($uibModal) {
         return {
             show: function (question, edit) {
-                return $modal.open({
+                return $uibModal.open({
                         animation: true,
                         templateUrl: 'app/components/modal/questionPreview.html',
                         size: 'md',
@@ -14,7 +14,7 @@ angular.module('stApp.questionPreview', [])
                                 return edit;
                             }
                         },
-                        controller: function ($scope, QuestionSrv, $rootScope, $modalInstance, question, alert, edit) {
+                        controller: function ($scope, QuestionSrv, $rootScope, $uibModalInstance, question, alert, edit) {
                             $scope.question = question;
 
                             $scope.edit = edit;
@@ -26,7 +26,7 @@ angular.module('stApp.questionPreview', [])
                             }
 
                             $scope.close = function () {
-                                $modalInstance.close();
+                                $uibModalInstance.close();
                             }
 
                             //$scope.getAnswers = function () {

@@ -1,11 +1,11 @@
 <div>
-    <h3>{{$root.msg['st.testManaging']}}</h3>
+    <h3>{{'st.testManaging' | translate}}</h3>
 
     <div class="col-md-offset-10">
-        <button type="button" class="btn btn-default" ng-click="showPreview()">{{$root.msg['st.preview']}}</button>
+        <button type="button" class="btn btn-default" ng-click="showPreview()">{{'st.preview' | translate}}</button>
     </div>
     <div class="col-md-4">
-        <h4>{{$root.msg['st.questionType']}}</h4>
+        <h4>{{'st.questionType' | translate}}</h4>
 
         <div class="grid">
             <button class="btn btn-default" ng-click="addRadioQ()"><span class="glyphicon glyphicon-record"></span>
@@ -18,12 +18,12 @@
         <br/>
 
         <div>
-            <button class="btn btn-default">{{$root.msg['st.importQuestions']}}</button>
+            <button class="btn btn-default">{{'st.importQuestions' | translate}}</button>
         </div>
         <br/>
 
         <div class="form-group has-feedback">
-            <input type="text" class="form-control" ng-model="testSearch" placeholder="{{$root.msg['st.search']}}"/>
+            <input type="text" class="form-control" ng-model="testSearch" placeholder="{{'st.search' | translate}}"/>
             <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
 
@@ -41,13 +41,13 @@
 
         <div class="col-md-11">
             <input type="text" ng-model="test.name" class="form-control titleInput"
-                   placeholder="{{$root.msg['st.testName']}}"/>
+                   placeholder="{{'st.testName' | translate}}"/>
             <br/>
             <input type="text" ng-model="test.subject" class="form-control "
-                   placeholder="{{$root.msg['st.subject']}}"/>
+                   placeholder="{{'st.subject' | translate}}"/>
             <br/>
             <textarea ng-model="test.description" class="form-control"
-                      placeholder="{{$root.msg['st.testDescription']}}"/>
+                      placeholder="{{'st.testDescription' | translate}}"/>
 
             <br/>
 
@@ -87,9 +87,9 @@
                 <br/>
 
                 <div>
-                    <button class="btn btn-default" ng-click="removeQuestion($index)">{{$root.msg['st.remove']}}
+                    <button class="btn btn-default" ng-click="removeQuestion($index)">{{'st.remove' | translate}}
                     </button>
-                    <button class="btn btn-default" ng-click="setAnswer(question)">{{$root.msg['st.setAnswer']}}
+                    <button class="btn btn-default" ng-click="setAnswer(question)">{{'st.setAnswer' | translate}}
                     </button>
                 </div>
             </div>
@@ -99,7 +99,7 @@
             <br/>
             <hr>
         </div>
-        <button ng-click="saveTest()" type="submit" class="btn btn-primary">{{$root.msg['st.save']}}</button>
+        <button ng-click="saveTest()" type="submit" class="btn btn-primary">{{'st.save' | translate}}</button>
     </div>
 
 </div>

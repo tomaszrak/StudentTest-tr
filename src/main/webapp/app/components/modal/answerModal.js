@@ -1,8 +1,8 @@
 angular.module('st.answerModal', [])
-    .service('AnswerModalSrv', function($modal){
+    .service('AnswerModalSrv', function($uibModal){
         return {
             show : function(question){
-                return $modal.open({
+                return $uibModal.open({
                     animation : true,
                     templateUrl : 'app/components/modal/answerModal.html',
                     size : 'md',
@@ -11,7 +11,7 @@ angular.module('st.answerModal', [])
                             return question;
                         }
                     },
-                    controller : function($modalInstance, $scope, $rootScope, question, AnswerSrv, alert){
+                    controller : function($uibModalInstance, $scope, $rootScope, question, AnswerSrv, alert){
                         $scope.question = question;
 
                         $scope.save = function(answer){
@@ -25,7 +25,7 @@ angular.module('st.answerModal', [])
                         }
 
                         $scope.cancel = function(){
-                            $modalInstance.close();
+                            $uibModalInstance.close();
                         }
                     }
                 })

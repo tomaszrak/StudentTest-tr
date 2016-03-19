@@ -1,24 +1,24 @@
 <div>
-    <h3>{{$root.msg['st.userManaging']}}</h3>
+    <h3>{{'st.userManaging' | translate}}</h3>
     <div class="form-group col-md-3 col-md-offset-1">
         <form name="userForm" class="form-horizontal form-group">
-            <label for="lastName"><strong>{{$root.msg['st.lastName']}}</strong></label>
-            <input class="form-control" name="lastName" ng-model="user.lastName" type="text"/>
+            <label for="lastName"><strong>{{'st.lastName' | translate}}</strong></label>
+            <input id="lastName" class="form-control" name="lastName" ng-model="user.lastName" type="text"/>
 
-            <label for="firstName"><strong>{{$root.msg['st.firstName']}}</strong></label>
-            <input class="form-control" name="firstName" ng-model="user.firstName" type="text"/>
+            <label for="firstName"><strong>{{'st.firstName' | translate}}</strong></label>
+            <input id="firstName" class="form-control" name="firstName" ng-model="user.firstName" type="text"/>
 
-            <label for="email"><strong>{{$root.msg['st.email']}}</strong></label>
-            <input class="form-control" name="email" ng-model="user.email" type="email"/>
+            <label for="email"><strong>{{'st.email' | translate}}</strong></label>
+            <input id="email" class="form-control" name="email" ng-model="user.email" type="email"/>
 
-            <label for="indexNumber"><strong>{{$root.msg['st.indexNumber']}}</strong></label>
-            <input class="form-control" name="indexNumber" ng-model="user.indexNumber" type="number"/>
+            <label for="indexNumber"><strong>{{'st.indexNumber' | translate}}</strong></label>
+            <input id="indexNumber" class="form-control" name="indexNumber" ng-model="user.indexNumber" type="number"/>
 
-            <label for="password"><strong>{{$root.msg['st.password']}}</strong></label>
-            <input class="form-control" name="password" ng-model="user.password" type="password"/>
+            <label for="password"><strong>{{'st.password' | translate}}</strong></label>
+            <input id="password" class="form-control" name="password" ng-model="user.password" type="password"/>
 
             <button class="btn btn-default" ng-click="addUser()" ng-desibled="userForm.$invalid">
-                {{$root.msg['st.save']}}
+                {{'st.save' | translate}}
             </button>
         </form>
 
@@ -27,12 +27,12 @@
 
     <table class="table table-bordered table-stripped">
         <tr class="header">
-            <th>{{$root.msg['st.firstName']}}</th>
-            <th>{{$root.msg['st.firstName']}}</th>
-            <th>{{$root.msg['st.indexNumber']}}</th>
-            <th>{{$root.msg['st.status']}}</th>
-            <th>{{$root.msg['st.role']}}</th>
-            <th>{{$root.msg['st.actions']}}</th>
+            <th>{{'st.firstName' | translate}}</th>
+            <th>{{'st.firstName' | translate}}</th>
+            <th>{{'st.indexNumber' | translate}}</th>
+            <th>{{'st.status' | translate}}</th>
+            <th>{{'st.role' | translate}}</th>
+            <th>{{'st.actions' | translate}}</th>
         </tr>
         <tr ng-repeat="user in users">
             <td>{{user.firstName}}</td>
@@ -43,18 +43,18 @@
             <td>
                 <div class="btn-group" dropdown>
                     <button class="btn btn-primary dropdown-toggle" type="button">
-                        {{$root.msg['st.actions']}}
+                        {{'st.actions' | translate}}
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#" ng-click="editUser()">{{$root.msg['st.edit']}}</a></li>
-                        <li><a href="#" ng-click="changeStatus()">{{$root.msg['st.changeStatus']}}</a></li>
+                        <li><a href="#" ng-click="editUser()">{{'st.edit' | translate}}</a></li>
+                        <li><a href="#" ng-click="changeStatus()">{{'st.changeStatus' | translate}}</a></li>
                     </ul>
                 </div>
             </td>
         </tr>
         <tr ng-show="!tests.length">
-            <td colspan="6" class="cell_center no-result">{{$root.msg['st.noResults']}}</td>
+            <td colspan="6" class="cell_center no-result">{{'st.noResults' | translate}}</td>
         </tr>
     </table>
 </div>

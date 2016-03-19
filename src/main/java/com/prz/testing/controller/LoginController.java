@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,11 +52,15 @@ public class LoginController {
         return "redirect:/login";
     }
 
-    @RequestMapping(value = "/messages/en", method = RequestMethod.GET)
-    public ResponseEntity<Properties> getEnMessages() {
+    @RequestMapping(value = "/messages", method = RequestMethod.GET)
+    public ResponseEntity<Properties> getEnMessages(@RequestParam String lang) {
         try {
             Properties properties = new Properties();
-            properties.putAll(PropertiesLoaderUtils.loadProperties(new ClassPathResource("stApp_en.properties")));
+            if(lang.equals("en")){
+                properties.putAll(PropertiesLoaderUtils.loadProperties(new ClassPathResource("stApp_en.properties")));
+            } else{
+                properties.putAll(PropertiesLoaderUtils.loadProperties(new ClassPathResource("stApp_pl.properties")));
+            }
             return new ResponseEntity<Properties>(properties, HttpStatus.OK);
         } catch (IOException e) {
             throw new InternalServerError(e);

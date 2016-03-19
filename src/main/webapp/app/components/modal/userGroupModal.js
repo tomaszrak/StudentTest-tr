@@ -1,8 +1,8 @@
 angular.module('stApp.userGroupEdit', [])
-    .service('UserGroupEditSrv', function ($modal) {
+    .service('UserGroupEditSrv', function ($uibModal) {
         return {
             show: function (getAll, group, action) {
-                return $modal.open({
+                return $uibModal.open({
                     animation: true,
                     templateUrl: 'app/components/modal/userGroupModal.html',
                     size: 'lg',
@@ -17,28 +17,32 @@ angular.module('stApp.userGroupEdit', [])
                             return action;
                         }
                     },
-                    controller: function ($scope, $rootScope, UserSrv, $modalInstance, UserGroupSrv, alert, getAll, group) {
+                    controller: function ($scope, $rootScope, UserSrv, $uibModalInstance, UserGroupSrv, alert, getAll, group) {
 
                         $scope.groupUsers = [];
+                        $scope.insertedUsers = [];
 
                         if (angular.isUndefined(group)) {
                             $scope.group = {
                                 users: undefined
                             }
+                            $scope.create = true;
                         } else {
+                            $scope.create = false;
                             $scope.group = group;
-                            $scope.groupUsers = $scope.group.users;
+                            angular.copy(group.users, $scope.groupUsers);
                         }
 
                         $scope.getAllUsers = function () {
                             UserSrv.users()
                                 .success(function (result) {
-                                    if(null != $scope.group.users){
+                                    if (null != $scope.groupUsers) {
                                         var users = result;
 
-                                        for(var i=0; i<users.length; i++){
-                                            for(var j=0; j<$scope.group.users.length; j++){
-                                                if(angular.equals(users[i].id, $scope.group.users[j].id)){
+                                        for (var j = 0; j < $scope.groupUsers.length; j++) {
+                                            for (var i = 0; i < users.length; i++) {
+
+                                                if (angular.equals(users[i].id, $scope.groupUsers[j].id)) {
                                                     users.splice(i, 1);
                                                     break;
                                                 }
@@ -55,9 +59,9 @@ angular.module('stApp.userGroupEdit', [])
                         $scope.getAllUsers();
 
 
-
                         $scope.addUser = function ($index, user) {
                             $scope.groupUsers.push(user);
+                            $scope.insertedUsers.push(user);
                             $scope.users.splice($index, 1);
                         }
 
@@ -86,10 +90,12 @@ angular.module('stApp.userGroupEdit', [])
                         $scope.removeUser = function ($index, user) {
                             $scope.groupUsers.splice($index, 1);
                             $scope.users.push(user);
+                            $scope.insertedUsers.splice($index,1);
                         }
 
                         $scope.close = function () {
-                            $modalInstance.close();
+                            $uibModalInstance.close();
+                            $scope.insertedUsers = [];
                         }
 
                     }

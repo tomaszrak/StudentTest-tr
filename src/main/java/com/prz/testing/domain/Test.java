@@ -35,8 +35,8 @@ public class Test {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinTable(name = "TEST_QUESTION",
-            joinColumns = @JoinColumn(name = "TEST_ID"),
-            inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
+            joinColumns = @JoinColumn(name = "QUESTION_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TEST_ID"))
     private Set<Question> questions;
 
     public Set<Question> getQuestions() {

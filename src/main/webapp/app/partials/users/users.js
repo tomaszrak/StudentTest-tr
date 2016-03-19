@@ -1,14 +1,15 @@
 /**
  * Created by ROLO on 03.11.2015.
  */
-angular.module('stApp.users', ['ngRoute'])
-    .config(['$routeProvider', function($routeProvider){
-        $routeProvider.when('/users', {
+angular.module('stApp.users', ['ui.router'])
+    .config(['$stateProvider', function($stateProvider){
+        $stateProvider.state('users', {
+            url : '/users',
             templateUrl : 'app/partials/users/users.html',
             controller : 'UserCtrl'
         })
     }])
-    .controller('UserCtrl', function(UserSrv, $scope, $rootScope){
+    .controller('UserCtrl', function(UserSrv, $scope){
 
         //$scope.$on('viewContentLoaded', function(){
         //    $scope.getUsers();

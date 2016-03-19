@@ -1,6 +1,7 @@
-angular.module('stApp.test', [])
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/test', {
+angular.module('stApp.test', ['ui.router'])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('test', {
+            url : '/test',
             templateUrl: 'app/partials/test/test.html',
             controller: 'TestCtrl'
         })

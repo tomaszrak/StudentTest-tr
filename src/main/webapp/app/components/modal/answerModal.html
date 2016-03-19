@@ -3,13 +3,13 @@
 </div>
 <div class="modal-body">
     <div class="form-group">
-        <label class="col-md-3" for="name">{{$root.msg['st.answerName']}}</label>
+        <label class="col-md-3" for="name">{{'st.answerName' | translate}}</label>
 
-        <div class="col-md-6"><textarea
+        <div class="col-md-6"><textarea id="name"
                 name="content" ng-model="answer.name" class="form-control" type="text"/></div>
     </div>
 </div>
-<div class="modal-header">
-    <button class="btn btn-success" ng-click="save(answer)">{{$root.msg['st.save']}}</button>
-    <button class="btn btn-primary" ng-click="cancel()">{{$root.msg['st.cancel']}}</button>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="save(answer)">{{'st.save' | translate}}</button>
+    <button class="btn btn-primary" ng-click="cancel()">{{'st.cancel' | translate}}</button>
 </div>

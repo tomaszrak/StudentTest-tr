@@ -1,32 +1,32 @@
 <div>
-    <h3><strong>{{$root.msg['st.questionManaging']}}</strong></h3>
+    <h3><strong>{{'st.questionManaging' | translate}}</strong></h3>
     <br>
     <div class="form-group col-md-3 col-md-offset-1">
         <form name="questionForm" class="form-horizontal">
-            <label for="name"><strong>{{$root.msg['st.name']}}</strong></label>
+            <label for="name"><strong>{{'st.name' | translate}}</strong></label>
             <input class="form-control" name="name" ng-model="question.name" required/>
 
-            <label for="type"><strong>{{$root.msg['st.questionType']}}</strong></label>
+            <label for="type"><strong>{{'st.questionType' | translate}}</strong></label>
             <select class="form-control" name="type" ng-model="question.type" ng-options="t.name for t in questionTypes"
                     required>
 
             </select>
 
-            <label for="time"><strong>{{$root.msg['st.timeForAnswer']}}</strong></label>
+            <label for="time"><strong>{{'st.timeForAnswer' | translate}}</strong></label>
             <input class="form-control" name="time" type="number" ng-model="question.timeForAnswer">
 
-            <button type="submit" class="btn btn-default" ng-click="addQuestion()">{{$root.msg['st.save']}}</button>
+            <button type="submit" class="btn btn-default" ng-click="addQuestion()">{{'st.save' | translate}}</button>
         </form>
     </div>
 
     <table class="table table-bordered table-stripped">
         <tr class="header">
-            <th>{{$root.msg['st.name']}}</th>
-            <th>{{$root.msg['st.questionType']}}</th>
-            <th>{{$root.msg['st.timeForAnswer']}}</th>
-            <th>{{$root.msg['st.createDate']}}</th>
-            <th>{{$root.msg['st.creator']}}</th>
-            <th>{{$root.msg['st.actions']}}</th>
+            <th>{{'st.name' | translate}}</th>
+            <th>{{'st.questionType' | translate}}</th>
+            <th>{{'st.timeForAnswer' | translate}}</th>
+            <th>{{'st.createDate' | translate}}</th>
+            <th>{{'st.creator' | translate}}</th>
+            <th>{{'st.actions' | translate}}</th>
         </tr>
         <tr ng-repeat="question in questions">
             <td>{{ question.name }}</td>
@@ -37,19 +37,19 @@
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{$root.msg['st.actions']}}
+                        {{'st.actions' | translate}}
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="" ng-click="editQuestion(question)">{{$root.msg['st.edit']}}</a></li>
-                        <li><a href="" ng-click="addAnswer(question)">{{$root.msg['st.addAnswer']}}</a></li>
-                        <li><a href="" ng-click="showPreview(question)">{{$root.msg['st.preview']}}</a></li>
+                        <li><a href="" ng-click="editQuestion(question)">{{'st.edit' | translate}}</a></li>
+                        <li><a href="" ng-click="addAnswer(question)">{{'st.addAnswer' | translate}}</a></li>
+                        <li><a href="" ng-click="showPreview(question)">{{'st.preview' | translate}}</a></li>
                     </ul>
                 </div>
             </td>
         </tr>
         <tr ng-show="!tests.length">
-            <td colspan="6" class="cell_center no-result">{{$root.msg['st.noResults']}}</td>
+            <td colspan="6" class="cell_center no-result">{{'st.noResults' | translate}}</td>
         </tr>
     </table>
 

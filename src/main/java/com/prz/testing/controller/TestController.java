@@ -33,6 +33,7 @@ public class TestController {
     public ResponseEntity<List<Test>> getAllTests() {
         try {
             List<Test> tests = testService.getTestsByUser(userData.getId());
+            
             return new ResponseEntity<List<Test>>(tests, HttpStatus.OK);
         } catch (Exception e) {
             throw new InternalServerError(e);

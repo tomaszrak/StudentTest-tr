@@ -1,13 +1,14 @@
-angular.module('stApp.userGroup', [])
-    .config(function ($routeProvider) {
-        $routeProvider.when('/userGroup', {
+angular.module('stApp.userGroup', ['ui.router'])
+    .config(function ($stateProvider) {
+        $stateProvider.state('userGroup', {
+            url : '/userGroup',
             templateUrl: 'app/partials/userGroup/userGroup.html',
             controller: 'UserGroupCtrl'
         })
     })
     .controller('UserGroupCtrl', ['$scope', 'UserGroupSrv', '$rootScope', 'alert', 'UserGroupEditSrv', 'TestAssignSrv',
-        '$filter', '$rootScope',
-        function ($scope, UserGroupSrv, $rootScope, alert, UserGroupEditSrv, TestAssignSrv, $filter, $rootScope) {
+        '$filter', 'TestResultsSrv',
+        function ($scope, UserGroupSrv, $rootScope, alert, UserGroupEditSrv, TestAssignSrv, $filter, TestResultsSrv) {
 
             $scope.selectedGroup = undefined;
 
@@ -80,8 +81,10 @@ angular.module('stApp.userGroup', [])
                     if (angular.isDefined($scope.ssummary) && null != $scope.summary) {
 
                         for (var t = 0; t < $scope.ssummary.length; t++) {
-                            if (!angular.equals($scope.ssummary[t].test, tmpTests[t].id)) {
-                                $scope.ssummary.splice(t, 0, {degree: '', test: tmpTests[t].id});
+                            if(t < tmpTests.length){
+                                if (!angular.equals($scope.ssummary[t].test, tmpTests[t].id)) {
+                                    $scope.ssummary.splice(t, 0, {degree: '', test: tmpTests[t].id});
+                                }
                             }
                         }
 
@@ -94,13 +97,10 @@ angular.module('stApp.userGroup', [])
                             );
                         }
 
-                        console.log($scope.ssummary);
-
                         $scope.results.push($scope.result);
-                        console.log($scope.results);
                     }
                 }
-
+                TestResultsSrv.show($scope.header, $scope.results);
             }
         }
     ]);

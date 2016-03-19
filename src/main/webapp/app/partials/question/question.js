@@ -2,9 +2,10 @@
  * Created by Roman on 20.10.2015.
  */
 
-angular.module('stApp.question', ['ngRoute'])
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/question', {
+angular.module('stApp.question', ['ui.router'])
+    .config(['$stateProvider', function ($stateProvider) {
+        $stateProvider.state('question', {
+            url : '/question',
             templateUrl: 'app/partials/question/question.html',
             controller: 'QuestionCtrl'
         })

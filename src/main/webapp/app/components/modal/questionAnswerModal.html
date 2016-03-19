@@ -5,7 +5,7 @@
     <div class="col-md-10">
         <div class="col-md-10">
             <input type="text" class="form-control" ng-model="questionName"
-                   placeholder="{{$root.msg['st.questionName']}}">
+                   placeholder="{{'st.questionName' | translate}}">
         </div>
     </div>
     <br/>
@@ -63,7 +63,7 @@
     </div>
 
 </div>
-<div class="modal-header">
-    <button class="btn btn-success" ng-click="save()">{{$root.msg['st.save']}}</button>
-    <button class="btn btn-primary" ng-click="close()">{{$root.msg['st.cancel']}}</button>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="save()">{{'st.save' | translate}}</button>
+    <button class="btn btn-primary" ng-click="close()">{{'st.cancel' | translate}}</button>
 </div>

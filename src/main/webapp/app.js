@@ -1,20 +1,26 @@
-angular.module('stApp', ['ngRoute',
-    'ngResource',
+angular.module('stApp', ['ui.router',
     'ui.bootstrap',
+    'pascalprecht.translate',
     'stApp.partials',
     'stApp.services',
     'stApp.modals',
     'stApp.filter',
     'stApp.common'])
 
-    .config(['$routeProvider', '$httpProvider', '$locationProvider', function ($routeProvider, $httpProvider, $locationProvider) {
-        $routeProvider.otherwise({redirectTo: '/main'});
-        $routeProvider.when('/login', {
-            templateUrl: '/login.html'
-        })
-        $locationProvider.html5Mode(false);
+    .config(['$stateProvider', '$urlRouterProvider', '$translateProvider',
+        function ($stateProvider, $urlRouterProvider, $translateProvider) {
+            $urlRouterProvider.otherwise('/main');
+            $stateProvider.state('login', {
+                url: '/login',
+                templateUrl: '/login.html'
+            });
+            //$translateProvider.translations('en', {})
+            //$translateProvider.preferredLanguage('en');
+            $translateProvider.useUrlLoader('../rest/messages');
+            $translateProvider.preferredLanguage('en');
+            //$locationProvider.html5Mode(false);
 
-    }])
+        }])
 
     .controller('IndexCtrl', function ($scope, $http, $window, alert) {
 
@@ -26,25 +32,21 @@ angular.module('stApp', ['ngRoute',
 
         $scope.testData = "data";
 
-        $scope.logout = function(){
-            $http.get("/logout").success(function(){
+        $scope.logout = function () {
+            $http.get("/logout").success(function () {
                 $window.open("../login", "_self");
             });
         }
     })
 
-    .run(['$rootScope', '$resource', function ($rootScope, $resource) {
+    .run(['$rootScope', '$http', function ($rootScope, $http) {
 
-        var messages = $resource('../rest/messages/en',
-            {}, {
-                query: {method: 'GET', params: {}, isArray: false}
-            });
-        $rootScope.msg = messages.query();
+        //var messages = $http.get('../rest/messages/en.json');
+        $rootScope.msg = "";//messages;
 
-        var user = $resource('../rest/user',
-            {}, {
-                query: {method: 'POST', params: {}, isArray: false}
-            });
-        $rootScope.user = user.query();
+        var user = $http.post('../rest/user');
+        user.success(function(result){
+            $rootScope.user = result;
+        });
 
     }])
