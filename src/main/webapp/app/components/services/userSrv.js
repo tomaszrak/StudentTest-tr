@@ -12,6 +12,12 @@ angular.module('stApp.userSrv', [])
             },
             userForUpdate : function(user){
                 return $http.post('../rest/users/userToUpdate', user);
+            },
+            userToDelete : function(user){
+                return $http.delete('../rest/users/user/' + user.id, user);
+            },
+            password : function(user){
+                return $http.post('../rest/users/password', user);
             }
         }
     });

@@ -11,9 +11,9 @@
 <body ng-controller="IndexCtrl" ng-cloak>
 <div>
     <div class="alert-container">
-        <alert class="alert-frame" ng-repeat="alert in alertList"
-               type="{{alert.type}}" close="alertService.closeAlert($index)">{{alert.msg}}
-        </alert>
+        <uib-alert class="alert-frame" ng-repeat="alert in alertList"
+               type="{{alert.type}}" close="alertService.closeAlert($index)">{{alert.msg}} {{alert.type}}
+        </uib-alert>
     </div>
     <nav class="navbar" id="header">
         <div class="navbar-header navbar-brand">
@@ -64,6 +64,8 @@
 <script src="app/components/modal/tests/testAssigningModal.js"></script>
 <script src="app/components/modal/tests/testPreview.js"></script>
 <script src="app/components/modal/tests/testResults.js"></script>
+<script src="app/components/modal/users/addEditUser.js"></script>
+<script src="app/components/modal/common/confirmModal.js"></script>
 
 <script src="app/components/filter/modules.js"></script>
 <script src="app/components/filter/questionType.js"></script>

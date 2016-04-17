@@ -27,7 +27,7 @@ public class UserData extends User implements Serializable{
 
     private Date createDate;
 
-    private String indexNumber;
+    private Integer indexNumber;
 
     private String password;
 
@@ -54,12 +54,12 @@ public class UserData extends User implements Serializable{
     }
 
     @Override
-    public String getIndexNumber() {
+    public Integer getIndexNumber() {
         return indexNumber;
     }
 
     @Override
-    public void setIndexNumber(String indexNumber) {
+    public void setIndexNumber(Integer indexNumber) {
         this.indexNumber = indexNumber;
     }
 

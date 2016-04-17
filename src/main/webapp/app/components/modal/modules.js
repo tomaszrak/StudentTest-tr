@@ -8,5 +8,7 @@ angular.module('stApp.modals', [
     'stApp.userGroupEdit',
     'stApp.testAssign',
     'stApp.testPreview',
-    'stApp.testResults'
+    'stApp.testResults',
+    'stApp.userModal',
+    'stApp.confirmModal'
 ])

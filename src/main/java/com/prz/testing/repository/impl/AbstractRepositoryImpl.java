@@ -56,7 +56,8 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
     }
 
     public void delete(Long id) throws SQLException {
-        getCurrentSession().delete("ID", id);
+        T t = (T) getCurrentSession().createCriteria(clazz).add(Restrictions.eq("id", id)).uniqueResult();
+        getCurrentSession().delete(t);
     }
 
     public int countAll() throws SQLException {

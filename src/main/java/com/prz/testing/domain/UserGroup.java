@@ -32,7 +32,7 @@ public class UserGroup {
     @Column(name = "CREATE_DATE", nullable = true)
     private Date createDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "USER_GROUP_USERS",
             joinColumns = @JoinColumn(name = "USER_GROUP_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_ID"))

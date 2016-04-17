@@ -104,3 +104,38 @@ html, body {
 .ng-invalid.ng-touched {
     border-color: red;
 }
+
+label {
+    /* Other styling.. */
+    text-align: right;
+    clear: both;
+    float:left;
+    margin-right:15px;
+}
+
+.modal-body{
+    padding: 30px;
+}
+
+.form-control{
+    height: 30px;
+    padding: 4px 13px;
+    border-radius: 3px;
+}
+
+.btn{
+    height: 30px;
+    min-width: 100px;
+    border-radius: 3px;
+    padding: 4px 12px;
+}
+
+.app-modal-window .modal-dialog {
+    width: 500px;
+}
+
+.btn-add{
+    float: right;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}

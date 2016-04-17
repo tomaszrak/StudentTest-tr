@@ -19,5 +19,7 @@ public interface UserRepository extends AbstractRepository<User>{
 
     List<User> getByRoleName(RoleName roleNames) throws SQLException;
 
-    User getByIndexNumber(String indexNumber) throws SQLException;
+    User getByIndexNumber(Integer indexNumber) throws SQLException;
+
+    void updateUserPassword(Long userId, String password) throws SQLException;
 }

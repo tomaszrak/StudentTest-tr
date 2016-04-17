@@ -7,7 +7,11 @@ import com.prz.testing.enumerate.RoleName;
 import com.prz.testing.enumerate.Status;
 import com.prz.testing.repository.RoleRepository;
 import com.prz.testing.repository.UserRepository;
+import com.prz.testing.service.MailSendService;
 import com.prz.testing.service.UserService;
+import com.prz.testing.util.LangUtil;
+import com.prz.testing.util.LogUtil;
+import com.prz.testing.util.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +33,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private MailSendService mailSendService;
+
+    @Autowired
+    private LogUtil logger;
+
+    @Autowired
+    private LangUtil langUtil;
+
     public List<User> getAllUsers() throws SQLException {
         return userRepository.getAllUsers();
     }
@@ -37,16 +50,24 @@ public class UserServiceImpl implements UserService {
         return userRepository.getById(id);
     }
 
-    public User getUserByIndex(String indexNumber) throws SQLException{
+    public User getUserByIndex(Integer indexNumber) throws SQLException {
         return userRepository.getByIndexNumber(indexNumber);
     }
 
-    public void saveUser(User user) throws SQLException {
-        user.setRole(roleRepository.getByName(RoleName.STUDENT));
-        System.out.println(user.getRole());
-        user.setCreateDate(new Date());
-        user.setStatus(Status.ACTIVE);
-        userRepository.save(user);
+    public void saveOrUpdateUser(User user) throws SQLException {
+        if (null == user.getId()) {
+            user.setRole(roleRepository.getByName(RoleName.STUDENT));
+            user.setCreateDate(new Date());
+            user.setStatus(Status.ACTIVE);
+            PasswordGenerator pg = new PasswordGenerator();
+            String phash = pg.generateMD5Hash();
+            user.setPassword(phash);
+            userRepository.save(user);
+            mailSendService.sendMail(user.getEmail(), langUtil.getProperty("st.mail.register.title"),
+                    langUtil.getProperty("st.mail.userWasRegistered", pg.password));
+        } else {
+            userRepository.update(user);
+        }
     }
 
     public void saveRole() throws SQLException {
@@ -82,4 +103,16 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) throws SQLException {
         userRepository.update(user);
     }
+
+    public void deleteUser(Long id) throws SQLException {
+        userRepository.delete(id);
+    }
+
+    public void resetPassword(User user) throws SQLException {
+        String password = new PasswordGenerator().password;
+        mailSendService.sendMail(user.getEmail(), langUtil.getProperty("st.mail.passwordReset"),
+                langUtil.getProperty("st.mail.passwordResetNewPassword", password));
+        userRepository.updateUserPassword(user.getId(), password);
+    }
+
 }

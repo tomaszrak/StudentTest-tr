@@ -15,11 +15,15 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Roman on 25.08.2015.
@@ -66,7 +70,7 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
         messageSource.setBasenames(basenames);
         messageSource.setUseCodeAsDefaultMessage(true);
         messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setCacheSeconds(0);
+//        messageSource.setCacheSeconds(0);
         return messageSource;
     }
 
@@ -105,5 +109,19 @@ public class SpringWebConfig extends WebMvcConfigurerAdapter {
     public void initLog4j() throws FileNotFoundException {
         Log4jConfigurer.initLogging("classpath:log4j.properties");
     }*/
+
+    @Bean
+    public LocaleResolver localeResolver(){
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
+        resolver.setDefaultLocale(new Locale("en"));
+        return resolver;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+        LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
+        interceptor.setParamName("lang");
+        registry.addInterceptor(interceptor);
+    }
 
 }

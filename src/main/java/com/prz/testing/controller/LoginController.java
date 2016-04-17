@@ -1,11 +1,11 @@
 package com.prz.testing.controller;
 
-import com.prz.testing.domain.Role;
 import com.prz.testing.domain.User;
 import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.UserService;
 import com.prz.testing.util.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.http.HttpStatus;
@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.Locale;
+import java.util.Properties;
 
 /**
  * Created by Roman on 25.08.2015.
@@ -57,8 +57,12 @@ public class LoginController {
         try {
             Properties properties = new Properties();
             if(lang.equals("en")){
+                Locale.setDefault(new Locale("en"));
+                LocaleContextHolder.setLocale(new Locale("en"));
                 properties.putAll(PropertiesLoaderUtils.loadProperties(new ClassPathResource("stApp_en.properties")));
             } else{
+                Locale.setDefault(new Locale("pl"));
+                LocaleContextHolder.setLocale(new Locale("pl"));
                 properties.putAll(PropertiesLoaderUtils.loadProperties(new ClassPathResource("stApp_pl.properties")));
             }
             return new ResponseEntity<Properties>(properties, HttpStatus.OK);
@@ -75,7 +79,7 @@ public class LoginController {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<User> getLoggedUser(){
         try {
-            User user = userService.getUserByIndex(SecurityContextHolder.getContext().getAuthentication().getName());
+            User user = userService.getUserByIndex(Integer.valueOf(SecurityContextHolder.getContext().getAuthentication().getName()));
             userData.setCreateDate(user.getCreateDate());
             userData.setRole(user.getRole());
             userData.setLastName(user.getLastName());

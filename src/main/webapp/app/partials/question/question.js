@@ -10,16 +10,18 @@ angular.module('stApp.question', ['ui.router'])
             controller: 'QuestionCtrl'
         })
     }])
-    .controller('QuestionCtrl', function ($scope, $location, $rootScope, QuestionSrv, PaginationSrv, AnswerModalSrv,
-                                          QuestionPreviewSrv) {
+    .controller('QuestionCtrl', function($scope, $location, $rootScope, QuestionSrv, PaginationSrv, AnswerModalSrv,
+                                          QuestionPreviewSrv, $filter) {
+
+        var $translate = $filter('translate');
 
         $scope.questionTypes = [
-            {type: "MULTIPLE", name: $rootScope.msg['st.multipleType']},
-            {type: "ONE_ANSWER", name: $rootScope.msg['st.oneAnswer']},
-           // {type: "MATCHING", name: $rootScope.msg['st.matching']},
-            {type: "TRUE_FALSE", name: $rootScope.msg['st.trueFalse']},
-            {type: "NUMBER", name: $rootScope.msg['st.number']},
-            {type: "SHORT_ANSWER", name: $rootScope.msg['st.shortAnswer']}];
+            {type: "MULTIPLE", name: $translate('st.multipleType')},
+            {type: "ONE_ANSWER", name: $translate('st.oneAnswer')},
+           // {type: "MATCHING", name: $translate('st.matching')},
+            {type: "TRUE_FALSE", name: $translate('st.trueFalse')},
+            {type: "NUMBER", name: $translate('st.number')},
+            {type: "SHORT_ANSWER", name: $translate('st.shortAnswer')}];
 
         $scope.addQuestion = function () {
             $scope.question.type = $scope.question.type.type;

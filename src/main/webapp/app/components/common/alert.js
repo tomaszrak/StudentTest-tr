@@ -4,8 +4,7 @@ angular
     'alert',
     [
         '$timeout',
-        '$filter',
-        function($timeout, $filter) {
+        function($timeout) {
             var alerts = [];
 
             var closeAlert = function(index) {
@@ -25,6 +24,14 @@ angular
                             closeAlert(alerts.indexOf(alert));
                         }, timeout);
                     }
+                },
+
+                success : function(msg){
+                    this.add(msg, "success", 4000);
+                },
+
+                error : function(msg){
+                    this.add(msg, "danger", 6000);
                 },
 
                 handleErrors : function(data) {

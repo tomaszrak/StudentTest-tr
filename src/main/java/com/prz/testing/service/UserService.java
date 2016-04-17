@@ -15,7 +15,7 @@ public interface UserService {
 
     User getUserById(Long id) throws SQLException;
 
-    void saveUser(User user) throws SQLException;
+    void saveOrUpdateUser(User user) throws SQLException;
 
     void blockUser(User user) throws SQLException;
 
@@ -29,5 +29,9 @@ public interface UserService {
 
     void updateUser(User user) throws SQLException;
 
-    public User getUserByIndex(String indexNumber) throws SQLException;
+    User getUserByIndex(Integer indexNumber) throws SQLException;
+
+    void deleteUser(Long id) throws SQLException;
+
+    void resetPassword(User user) throws SQLException;
 }

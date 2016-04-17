@@ -48,10 +48,15 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<User> implements 
         return users;
     }
 
-    public User getByIndexNumber(String indexNumber) throws SQLException {
+    public User getByIndexNumber(Integer indexNumber) throws SQLException {
         User user = (User) getCurrentSession().createCriteria(User.class)
                 .add(Restrictions.eq("indexNumber", indexNumber)).uniqueResult();
 
         return user;
+    }
+
+    public void updateUserPassword(Long userId, String password) throws SQLException {
+        getCurrentSession().createQuery("UPDATE USERS set password = :password where id = :id")
+                .setParameter("id", userId).setParameter("password", password).executeUpdate();
     }
 }

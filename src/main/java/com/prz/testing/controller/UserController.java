@@ -4,15 +4,12 @@ import com.prz.testing.criteria.Criteria;
 import com.prz.testing.domain.User;
 import com.prz.testing.dto.PaginationData;
 import com.prz.testing.exception.InternalServerError;
-import com.prz.testing.service.RoleService;
 import com.prz.testing.service.UserService;
+import com.prz.testing.util.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -28,10 +25,10 @@ public class UserController extends PaginationController<User> {
     private UserService userService;
 
     @Autowired
-    private RoleService roleService;
+    private UserData userData;
 
     @Autowired
-    private UserData userData;
+    private LogUtil logger;
 
     @Override
     public PaginationData<User> fetch(Criteria criteria) throws Exception {
@@ -52,7 +49,7 @@ public class UserController extends PaginationController<User> {
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<Void> saveUser(@RequestBody User user) {
         try {
-            userService.saveUser(user);
+            userService.saveOrUpdateUser(user);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (SQLException e) {
             throw new InternalServerError(e);
@@ -75,6 +72,33 @@ public class UserController extends PaginationController<User> {
             List<User> user = userService.getAllUsersPaginated(new Criteria(0, 10));
             return new ResponseEntity<List<User>>(user, HttpStatus.OK);
         } catch (SQLException e) {
+            throw new InternalServerError(e);
+        }
+    }
+
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Long id) {
+        try {
+            User user = userService.getUserById(id);
+            if (null == user) {
+                logger.info(userData.getId().toString(),
+                        String.format("Cannot remove user. User with id=%d not found", id));
+                return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+            }
+
+            userService.deleteUser(id);
+            return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        } catch (SQLException e) {
+            throw new InternalServerError(e);
+        }
+    }
+
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    public ResponseEntity<Void> resetPassword(@RequestBody User user) {
+        try {
+            userService.resetPassword(user);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } catch (Exception e) {
             throw new InternalServerError(e);
         }
     }

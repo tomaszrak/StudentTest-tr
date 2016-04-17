@@ -48,7 +48,7 @@ public class UserRepositoryTest {
         user.setFirstName("firstname");
         user.setStatus(Status.ACTIVE);
         user.setEmail("email");
-        user.setIndexNumber("1111111");
+        user.setIndexNumber(1111111);
         user.setFirstName("firstname");
         user.setPassword("password");
     }

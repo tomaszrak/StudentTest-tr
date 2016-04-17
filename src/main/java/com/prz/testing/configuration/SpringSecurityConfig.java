@@ -65,11 +65,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth//.userDetailsService(userDetailsService);
                 .inMemoryAuthentication()
-                .withUser("admin")
+                .withUser("1010")
                 .password("admin")
                 .roles("ADMIN");
         auth.inMemoryAuthentication()
-                .withUser("student")
+                .withUser("2020")
                 .password("student")
                 .roles("STUDENT");
     }

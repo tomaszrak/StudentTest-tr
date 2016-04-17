@@ -1,9 +1,7 @@
 package com.prz.testing.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.prz.testing.enumerate.RoleName;
 import com.prz.testing.enumerate.Status;
-
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +10,7 @@ import java.util.Date;
  * Created by Roman on 10.09.2015.
  */
 @Entity(name = "USERS")
+@Table(name = "USERS")
 public class User {
 
     @Id
@@ -28,14 +27,14 @@ public class User {
     @Column(name = "EMAIL", nullable = false)
     private String email;
 
-    @Column(name = "CREATE_DATE", nullable = false)
+    @Column(name = "CREATE_DATE", nullable = true)
     private Date createDate;
 
-    @Column(name = "INDEX_NUMBER", nullable = false)
-    private String indexNumber;
+    @Column(name = "INDEX_NUMBER", nullable = true)
+    private Integer indexNumber;
 
     @JsonIgnore
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "PASSWORD", nullable = true)
     private String password;
 
     @Column(name = "STATUS", nullable = false)
@@ -85,11 +84,11 @@ public class User {
         this.createDate = createDate;
     }
 
-    public String getIndexNumber() {
+    public Integer getIndexNumber() {
         return indexNumber;
     }
 
-    public void setIndexNumber(String indexNumber) {
+    public void setIndexNumber(Integer indexNumber) {
         this.indexNumber = indexNumber;
     }
 
