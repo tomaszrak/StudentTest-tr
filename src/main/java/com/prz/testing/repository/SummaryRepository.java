@@ -12,4 +12,6 @@ import java.util.List;
 public interface SummaryRepository extends AbstractRepository<Summary>{
 
     List<Summary> getByUsers(List<User> students) throws SQLException;
+
+    List<Summary> getByUser(Long userId) throws SQLException;
 }

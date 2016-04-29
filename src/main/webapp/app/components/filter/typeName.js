@@ -1,4 +1,4 @@
-angular.module('stApp.questionType', [])
+angular.module('stApp.typeName', [])
     .filter('typeName', [ function(){
         return function(type, listOfTypes){
             for(var i =0; i<listOfTypes.length; i++){

@@ -39,8 +39,16 @@
                 <div class="col-md-4"><label for="status">{{ 'st.common.status' | translate }}</label></div>
                 <div class="col-md-5">
                     <select name="status" class="form-control" id="status" ng-model="user.status"
-                            ng-options="s.name for s in userStatuses" required
-                            ng-class="{'has-error':userForm.status.$error.required || !user.status.type}"></select>
+                            ng-options="s.name for s in userStatuses" required></select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4"><label for="role">{{ 'st.role' | translate}}</label></div>
+                <div class="col-md-5">
+                    <select name="status" class="form-control" id="role" ng-model="user.role.name"
+                            ng-options="r.name for r in userRoles" required>
+                    </select>
                 </div>
             </div>
         </form>

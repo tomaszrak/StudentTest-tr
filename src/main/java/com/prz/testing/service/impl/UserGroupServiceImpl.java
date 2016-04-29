@@ -1,18 +1,22 @@
 package com.prz.testing.service.impl;
 
 import com.prz.testing.controller.UserData;
-import com.prz.testing.domain.Summary;
 import com.prz.testing.domain.User;
 import com.prz.testing.domain.UserGroup;
+import com.prz.testing.dto.Summary;
+import com.prz.testing.exception.ObjectProcessException;
 import com.prz.testing.repository.SummaryRepository;
 import com.prz.testing.repository.UserGroupRepository;
 import com.prz.testing.repository.UserRepository;
 import com.prz.testing.service.UserGroupService;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,7 +27,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserGroupServiceImpl implements UserGroupService{
+public class UserGroupServiceImpl implements UserGroupService {
 
     @Autowired
     private UserGroupRepository userGroupRepository;
@@ -37,7 +41,7 @@ public class UserGroupServiceImpl implements UserGroupService{
     @Autowired
     private UserData userData;
 
-    private Logger logger =  Logger.getLogger(UserGroupServiceImpl.class);
+    private Logger logger = Logger.getLogger(UserGroupServiceImpl.class);
 
     public List<UserGroup> getAllGroups() throws SQLException {
         return userGroupRepository.getAllGroups();
@@ -57,8 +61,22 @@ public class UserGroupServiceImpl implements UserGroupService{
         userGroupRepository.delete(group);
     }
 
-    public List<Summary> getSummaryForGroup(Long id) throws SQLException {
+    public List<Summary> getSummaryForGroup(Long id) throws SQLException, ObjectProcessException {
         UserGroup userGroup = userGroupRepository.getById(id);
-        return summaryRepository.getByUsers(new ArrayList<User>(userGroup.getUsers()));
+        List<com.prz.testing.domain.Summary> summaries = summaryRepository.getByUsers(new ArrayList<User>(userGroup.getUsers()));
+        List<Summary> result = new ArrayList<Summary>();
+        for(com.prz.testing.domain.Summary summary : summaries){
+            Summary smr = new Summary();
+            try {
+                BeanUtils.copyProperties(smr, summary);
+            } catch (IllegalAccessException e) {
+                throw new ObjectProcessException(e);
+            } catch (InvocationTargetException e) {
+                throw new ObjectProcessException(e);
+            }
+            result.add(smr);
+        }
+        return result;
     }
+
 }

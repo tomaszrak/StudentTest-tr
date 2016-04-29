@@ -39,6 +39,17 @@ public class Test {
             inverseJoinColumns = @JoinColumn(name = "TEST_ID"))
     private Set<Question> questions;
 
+    @Column(name = "SCORE_TO_PASS")
+    private Integer scoreToPass;
+
+    public Integer getScoreToPass() {
+        return scoreToPass;
+    }
+
+    public void setScoreToPass(Integer scoreToPass) {
+        this.scoreToPass = scoreToPass;
+    }
+
     public Set<Question> getQuestions() {
         return questions;
     }

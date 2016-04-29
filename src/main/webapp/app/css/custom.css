@@ -139,3 +139,17 @@ label {
     margin-bottom: 15px;
     margin-top: 15px;
 }
+
+.panel.col-md-5{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.huge{
+    font-size:40px;
+    float: right;
+}
+
+.selected{
+    background-color: #46b8da;
+}

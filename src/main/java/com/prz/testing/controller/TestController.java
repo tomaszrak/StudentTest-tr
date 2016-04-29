@@ -2,7 +2,7 @@ package com.prz.testing.controller;
 
 import com.prz.testing.criteria.TestCriteria;
 import com.prz.testing.domain.QuestionAnswer;
-import com.prz.testing.domain.Summary;
+import com.prz.testing.dto.Summary;
 import com.prz.testing.domain.Test;
 import com.prz.testing.exception.InternalServerError;
 import com.prz.testing.service.TestService;

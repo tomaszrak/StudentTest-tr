@@ -3,19 +3,21 @@ package com.prz.testing.service.impl;
 import com.prz.testing.controller.UserData;
 import com.prz.testing.criteria.TestCriteria;
 import com.prz.testing.domain.*;
+import com.prz.testing.dto.Summary;
 import com.prz.testing.enumerate.QuestionType;
 import com.prz.testing.repository.*;
 import com.prz.testing.service.AnswerService;
-import com.prz.testing.service.QuestionService;
 import com.prz.testing.service.TestService;
-import com.sun.javafx.binding.StringFormatter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ROLO on 07.12.2015.
@@ -108,7 +110,7 @@ public class TestServiceImpl implements TestService {
         Summary summary = new Summary();
         summary.setCreateDate(new Date());
         summary.setStudent(student);
-        summary.setTest(answers.get(0).getTestId());
+        summary.setTestId(answers.get(0).getTestId());
         summary.setDegree("" + 100 * correctAnswersNumber / ids.size());
 
         logger.info(String.format("Correct answers [%d] for userId = [%d]", correctAnswersNumber, student.getId()));

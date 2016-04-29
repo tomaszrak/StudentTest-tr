@@ -26,4 +26,11 @@ public class SummaryRepositoryImpl extends AbstractRepositoryImpl<Summary> imple
                 .createCriteria(Summary.class).add(Restrictions.in("student", students)).list();
         return  list;
     }
+
+    public List<Summary> getByUser(Long userId) throws SQLException{
+        List<Summary> list = getCurrentSession().createCriteria(Summary.class)
+                .add(Restrictions.eq("student.id", userId)).list();
+
+        return list;
+    }
 }

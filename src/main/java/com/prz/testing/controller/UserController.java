@@ -3,8 +3,11 @@ package com.prz.testing.controller;
 import com.prz.testing.criteria.Criteria;
 import com.prz.testing.domain.User;
 import com.prz.testing.dto.PaginationData;
+import com.prz.testing.dto.Summary;
 import com.prz.testing.exception.InternalServerError;
+import com.prz.testing.service.SummaryService;
 import com.prz.testing.service.UserService;
+import com.prz.testing.service.impl.SummaryServiceImpl;
 import com.prz.testing.util.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +32,9 @@ public class UserController extends PaginationController<User> {
 
     @Autowired
     private LogUtil logger;
+
+    @Autowired
+    private SummaryServiceImpl summaryService;
 
     @Override
     public PaginationData<User> fetch(Criteria criteria) throws Exception {
@@ -99,6 +105,16 @@ public class UserController extends PaginationController<User> {
             userService.resetPassword(user);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } catch (Exception e) {
+            throw new InternalServerError(e);
+        }
+    }
+
+    @RequestMapping(value = "/summary", method = RequestMethod.POST)
+    public ResponseEntity<List<Summary>> getUserSummary(@RequestBody Long userId){
+        try {
+            List<Summary> summaries = summaryService.getSummaryForUser(userId);
+            return new ResponseEntity<List<Summary>>(summaries, HttpStatus.OK);
+        } catch (Exception e){
             throw new InternalServerError(e);
         }
     }

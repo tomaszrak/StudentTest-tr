@@ -5,7 +5,8 @@ angular.module('stApp', ['ui.router',
     'stApp.services',
     'stApp.modals',
     'stApp.filter',
-    'stApp.common'])
+    'stApp.common',
+    'stApp.directive'])
 
     .config(['$stateProvider', '$urlRouterProvider', '$translateProvider',
         function ($stateProvider, $urlRouterProvider, $translateProvider) {

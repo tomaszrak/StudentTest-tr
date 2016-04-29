@@ -2,7 +2,7 @@ package com.prz.testing.service;
 
 import com.prz.testing.criteria.TestCriteria;
 import com.prz.testing.domain.QuestionAnswer;
-import com.prz.testing.domain.Summary;
+import com.prz.testing.dto.Summary;
 import com.prz.testing.domain.Test;
 
 import java.sql.SQLException;

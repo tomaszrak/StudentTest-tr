@@ -4,6 +4,9 @@
         <button class="btn btn-default" ng-click="addUser(undefined)">{{'st.addUser' | translate}}</button>
     </div>
     <br>
+    <br>
+    <filter-table search-params="searchParams" class="row"></filter-table>
+
     <table class="table table-bordered table-stripped">
         <tr class="header">
             <th>{{'st.firstName' | translate}}</th>
@@ -11,14 +14,14 @@
             <th>{{'st.indexNumber' | translate}}</th>
             <th>{{'st.status' | translate}}</th>
             <th>{{'st.role' | translate}}</th>
-            <th>{{'st.actions' | translate}}</th>
+            <th>{{'st.actions' |    translate}}</th>
         </tr>
         <tr ng-repeat="user in users">
             <td>{{user.firstName}}</td>
             <td>{{user.lastName}}</td>
             <td>{{user.indexNumber}}</td>
             <td>{{user.status | typeName: userStatuses}}</td>
-            <td>{{user.role.name}}</td>
+            <td>{{user.role.name | typeName: userRoles}}</td>
             <td>
                 <div class="btn-group">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
@@ -30,6 +33,7 @@
                         <li><a href="" ng-click="addUser(user)">{{'st.edit' | translate}}</a></li>
                         <li><a href="" ng-click="remove(user)">{{'st.remove' | translate}}</a></li>
                         <li><a href="" ng-click="resetPassword(user)">{{'st.resetPassword' | translate}}</a></li>
+                        <li><a href="" ng-click="showStatistic(user)">{{'st.showTestStatistic' | translate}}</a></li>
                     </ul>
                 </div>
             </td>

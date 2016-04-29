@@ -1,3 +1,5 @@
 angular.module('stApp.common', [
-    'stApp.alert'
+    'stApp.alert',
+    'stApp.tableCriteria',
+    'stApp.event'
 ])

@@ -1,6 +1,6 @@
 package com.prz.testing.controller;
 
-import com.prz.testing.domain.Summary;
+import com.prz.testing.dto.Summary;
 import com.prz.testing.domain.User;
 import com.prz.testing.domain.UserGroup;
 import com.prz.testing.exception.InternalServerError;
@@ -72,7 +72,7 @@ public class UserGroupController {
         try {
             List<Summary> list = userGroupService.getSummaryForGroup(userGroupId);
             return new ResponseEntity<List<Summary>>(list, HttpStatus.OK);
-        } catch (SQLException e){
+        } catch (Exception e){
             e.printStackTrace();
             throw new InternalServerError(e);
         }

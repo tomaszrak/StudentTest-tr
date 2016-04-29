@@ -9,14 +9,24 @@ angular.module('stApp.users', ['ui.router'])
             controller: 'UserCtrl'
         })
     }])
-    .controller('UserCtrl', ['UserSrv', '$scope', 'UserModalSrv', '$translate', 'ConfirmModalSrv', 'alert',
-        function (UserSrv, $scope, UserModalSrv, $translate, ConfirmModalSrv, alert) {
+    .controller('UserCtrl', ['UserSrv', '$scope', 'UserModalSrv', '$translate', 'ConfirmModalSrv', 'alert', '$location',
+        function (UserSrv, $scope, UserModalSrv, $translate, ConfirmModalSrv, alert, $location) {
 
             $scope.userStatuses = [
                 {type: 'ACTIVE', name: $translate.instant('st.status.active')},
                 {type: 'BLOCKED', name: $translate.instant('st.status.blocked')},
                 {type: 'SUSPENDED', name: $translate.instant('st.status.suspended')}
             ];
+
+            $scope.userRoles = [
+                {type: 'STUDENT', name: $translate.instant('st.role.student')},
+                {type: 'TEACHER', name: $translate.instant('st.role.teacher')},
+                {type: 'ADMIN', name: $translate.instant('st.role.admin')}
+            ];
+
+            $scope.searchParams = [
+                'sdasd', 'sdsds', 'sawe'
+            ]
 
             $scope.getUsers = function () {
                 var promise = UserSrv.users()
@@ -28,7 +38,7 @@ angular.module('stApp.users', ['ui.router'])
             $scope.getUsers();
 
             $scope.addUser = function (user) {
-                UserModalSrv.show(user, $scope.getUsers, $scope.userStatuses);
+                UserModalSrv.show(user, $scope.getUsers, $scope.userStatuses, $scope.userRoles);
             }
 
             $scope.remove = function (user) {
@@ -41,6 +51,7 @@ angular.module('stApp.users', ['ui.router'])
                     .success(function (result) {
                         alert.success($translate.instant('st.userRemoved', {user: $scope.user.lastName
                             + ' ' + $scope.user.firstName}));
+                        $scope.getUsers();
                     });
             }
 
@@ -49,6 +60,10 @@ angular.module('stApp.users', ['ui.router'])
                     .success(function(){
                         alert.success($translate.instant('st.passwordResetSuccess', {email: user.email}));
                     });
+            }
+
+            $scope.showStatistic = function(user){
+                $location.path("/userTestStatistic/" + user.id);
             }
 
         }])

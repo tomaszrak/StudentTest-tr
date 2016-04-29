@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 
     public void saveOrUpdateUser(User user) throws SQLException {
         if (null == user.getId()) {
-            user.setRole(roleRepository.getByName(RoleName.STUDENT));
+            user.setRole(roleRepository.getByName(user.getRole().getName()));
             user.setCreateDate(new Date());
             user.setStatus(Status.ACTIVE);
             PasswordGenerator pg = new PasswordGenerator();

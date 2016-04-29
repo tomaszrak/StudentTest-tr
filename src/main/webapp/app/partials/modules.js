@@ -7,5 +7,6 @@ angular.module('stApp.partials',[
     'stApp.users',
     'stApp.test',
     'stApp.userGroup',
-    'stApp.testSolution'
+    'stApp.testSolution',
+    'stApp.userTestStatistic'
 ])

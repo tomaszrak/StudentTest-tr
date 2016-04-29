@@ -18,6 +18,9 @@ angular.module('stApp.userSrv', [])
             },
             password : function(user){
                 return $http.post('../rest/users/password', user);
+            },
+            summary : function(userId){
+                return $http.post('../rest/users/summary', userId);
             }
         }
     });

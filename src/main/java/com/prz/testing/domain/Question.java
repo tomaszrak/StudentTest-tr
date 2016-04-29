@@ -31,13 +31,24 @@ public class Question {
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "time")
+    @Column(name = "TIME")
     private Double timeForAnswer;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "ANSWERS_FOR_QUESTION", joinColumns = @JoinColumn(name = "QUESTION_ID"),
     inverseJoinColumns = @JoinColumn(name = "ANSWER_ID"))
     private Set<Answer> answers;
+
+    @Column(name = "SCORE")
+    private Integer score;
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
 
     public Set<Answer> getAnswers() {
         return answers;
